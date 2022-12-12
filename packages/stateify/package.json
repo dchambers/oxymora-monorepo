@@ -1,0 +1,14 @@
+{
+    "name": "@dchambers/stateify",
+    "version": "0.1.0",
+    "main": "src/stateify.tsx",
+    "scripts": {
+        "compile": "tsc"
+    },
+    "dependencies": {
+        "react": "^18.2.0"
+    },
+    "devDependencies": {
+        "typescript": "4.9.4"
+    }
+}

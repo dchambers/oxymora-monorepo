@@ -1,0 +1,15 @@
+{
+    "name": "@dchambers/oxymora",
+    "version": "0.1.0",
+    "main": "src/oxymora.tsx",
+    "scripts": {
+        "compile": "tsc"
+    },
+    "dependencies": {
+        "@dchambers/stateify": "^0.1.0",
+        "react": "^18.2.0"
+    },
+    "devDependencies": {
+        "typescript": "4.9.4"
+    }
+}

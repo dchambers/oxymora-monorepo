@@ -1,0 +1,10 @@
+{
+  "name": "@dchambers/oxymora-monorepo",
+  "packageManager": "yarn@3.3.0",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "compile": "yarn workspaces foreach --topological run compile"
+  }
+}
