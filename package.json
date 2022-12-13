@@ -1,14 +1,20 @@
 {
   "name": "@dchambers/oxymora-monorepo",
   "packageManager": "yarn@3.3.0",
+  "license": "MIT",
   "workspaces": [
     "packages/*"
   ],
   "scripts": {
     "generate": "yarn workspaces-to-typescript-project-references",
-    "compile": "yarn workspaces foreach --topological run compile"
+    "generate:ci": "yarn generate && yarn catch-uncommitted",
+    "compile": "tsc --build",
+    "compile:clean": "tsc --build --clean"
   },
   "devDependencies": {
-    "@monorepo-utils/workspaces-to-typescript-project-references": "^2.9.0"
+    "@monorepo-utils/workspaces-to-typescript-project-references": "^2.9.0",
+    "@types/node": "^18.11.14",
+    "catch-uncommitted": "^2.0.0",
+    "typescript": "^4.9.4"
   }
 }

@@ -1,6 +1,7 @@
 {
     "name": "@dchambers/oxymora-todomvc",
     "version": "0.1.0",
+    "license": "MIT",
     "main": "dist/src/TodoItem.js",
     "scripts": {
         "compile": "tsc --build"
