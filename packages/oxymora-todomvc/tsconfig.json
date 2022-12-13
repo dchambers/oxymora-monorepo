@@ -2,8 +2,15 @@
   "compilerOptions": {
     "outDir": "dist",
     "jsx": "react-jsx",
-    "jsxImportSource": "@emotion/react",
+    "jsxImportSource": "@emotion/react"
   },
   "extends": "../../tsconfig-base.json",
-  "include": ["src/**/*"],
+  "include": [
+    "src/**/*"
+  ],
+  "references": [
+    {
+      "path": "../oxymora"
+    }
+  ]
 }

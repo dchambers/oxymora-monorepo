@@ -1,7 +1,14 @@
 {
   "extends": "../../tsconfig-base.json",
-  "include": ["src/**/*"],
+  "include": [
+    "src/**/*"
+  ],
   "compilerOptions": {
     "outDir": "dist"
-  }
+  },
+  "references": [
+    {
+      "path": "../stateify"
+    }
+  ]
 }

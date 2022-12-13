@@ -1,15 +1,18 @@
 {
     "name": "@dchambers/oxymora",
     "version": "0.1.0",
-    "main": "src/oxymora.tsx",
+    "main": "dist/src/oxymora.jsx",
     "scripts": {
-        "compile": "tsc"
+        "compile": "tsc --build"
     },
     "dependencies": {
-        "@dchambers/stateify": "^0.1.0",
-        "react": "^18.2.0"
+        "@dchambers/stateify": "^0.1.0"
+    },
+    "peerDependencies": {
+        "react": "^18.0.0"
     },
     "devDependencies": {
-        "typescript": "4.9.4"
+        "react": "^18.2.0",
+        "typescript": "^4.9.4"
     }
 }

@@ -5,6 +5,10 @@
     "packages/*"
   ],
   "scripts": {
+    "generate": "yarn workspaces-to-typescript-project-references",
     "compile": "yarn workspaces foreach --topological run compile"
+  },
+  "devDependencies": {
+    "@monorepo-utils/workspaces-to-typescript-project-references": "^2.9.0"
   }
 }
