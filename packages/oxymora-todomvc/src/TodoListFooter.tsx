@@ -2,7 +2,7 @@ import type { MouseEventHandler } from "react";
 
 import * as React from "react";
 import { usePureStatefulCallback } from "@dchambers/oxymora";
-import { TodoItems, TodoListStateSpec, ViewMode } from "./TodoList";
+import { TodoItems, TodoListStateSpec, ListMode } from "./TodoList";
 import {
   clearCompletedStyle,
   filtersStyle,
@@ -12,16 +12,31 @@ import {
 } from "./TodoListStyle";
 
 type TodoListFooterProps = {
-  mode?: ViewMode;
   todoItems: TodoItems;
+  listMode: ListMode;
 };
 
 type ButtonClickHandler = MouseEventHandler<HTMLButtonElement>;
+type SpanClickHandler = MouseEventHandler<HTMLSpanElement>;
 
-const TodoListFooter = ({ mode, todoItems }: TodoListFooterProps) => {
+const TodoListFooter = ({ todoItems, listMode }: TodoListFooterProps) => {
   const remainingTodos = todoItems.filter(
     (todoItem) => todoItem.completed === false
   );
+
+  const changeListModeHandler = usePureStatefulCallback<
+    TodoListStateSpec,
+    SpanClickHandler
+  >((event, { state }) => {
+    const dataAttributes = (event.target as HTMLSpanElement).dataset;
+
+    return {
+      state: {
+        ...state,
+        listMode: dataAttributes.listMode as ListMode,
+      },
+    };
+  });
 
   const clearCompletedHandler = usePureStatefulCallback<
     TodoListStateSpec,
@@ -43,25 +58,31 @@ const TodoListFooter = ({ mode, todoItems }: TodoListFooterProps) => {
       </span>
       <ul css={filtersStyle}>
         <li>
-          <a href="/" css={mode === ViewMode.All ? selectedStyle : undefined}>
+          <span
+            css={listMode === ListMode.All ? selectedStyle : undefined}
+            data-list-mode={ListMode.All}
+            onClick={changeListModeHandler}
+          >
             All
-          </a>
+          </span>
         </li>
         <li>
-          <a
-            href="/active"
-            css={mode === ViewMode.Active ? selectedStyle : undefined}
+          <span
+            css={listMode === ListMode.Active ? selectedStyle : undefined}
+            data-list-mode={ListMode.Active}
+            onClick={changeListModeHandler}
           >
             Active
-          </a>
+          </span>
         </li>
         <li>
-          <a
-            href="/completed"
-            css={mode === ViewMode.Completed ? selectedStyle : undefined}
+          <span
+            css={listMode === ListMode.Completed ? selectedStyle : undefined}
+            data-list-mode={ListMode.Completed}
+            onClick={changeListModeHandler}
           >
             Completed
-          </a>
+          </span>
         </li>
       </ul>
       <button css={clearCompletedStyle} onClick={clearCompletedHandler}>

@@ -18,23 +18,22 @@ import {
 
 export type TodoListStateSpec = {
   State: TodoListInfo;
-  InputProps: {
-    mode?: ViewMode;
-  };
+  InputProps: {};
   OutputProps: {};
 };
 
 type TodoListInfo = {
   newTodo: string;
   todoItems: TodoItems;
+  listMode: ListMode;
 };
 
 export type TodoItems = Array<TodoItemProps>;
 
-export enum ViewMode {
-  All = "ALL",
-  Active = "ACTIVE",
-  Completed = "COMPLETED",
+export enum ListMode {
+  All = "ALL_ITEMS",
+  Active = "ACTIVE_ITEMS",
+  Completed = "COMPLETED_ITEMS",
 }
 
 type InputChangeHandler = React.ChangeEventHandler<HTMLInputElement>;
@@ -43,12 +42,23 @@ type InputKeyDownHandler = React.KeyboardEventHandler<HTMLInputElement>;
 const defaultTodoList = {
   newTodo: "",
   todoItems: [],
+  listMode: ListMode.All,
 };
+
+const isActiveItem = (todoItem: TodoItemProps) => !todoItem.completed;
+const isCompletedItem = (todoItem: TodoItemProps) => todoItem.completed;
 
 export const PureStatefulTodoList = pureStatefulComponent<TodoListStateSpec>(
   defaultTodoList,
   (props: Props<TodoListStateSpec>) => {
-    const { mode = ViewMode.All } = props;
+    const activeTodoItems =
+      props.state.listMode === ListMode.All
+        ? props.state.todoItems
+        : props.state.todoItems.filter(
+            props.state.listMode === ListMode.Active
+              ? isActiveItem
+              : isCompletedItem
+          );
 
     const onInputChangeHandler = usePureStatefulCallback<
       TodoListStateSpec,
@@ -68,6 +78,7 @@ export const PureStatefulTodoList = pureStatefulComponent<TodoListStateSpec>(
         event.key !== "Enter"
           ? state
           : {
+              ...state,
               newTodo: "",
               todoItems: [
                 ...state.todoItems,
@@ -84,7 +95,7 @@ export const PureStatefulTodoList = pureStatefulComponent<TodoListStateSpec>(
       <>
         <section css={mainStyle}>
           <ul css={todoListStyle}>
-            {props.state.todoItems.map((todoItem, i) => (
+            {activeTodoItems.map((todoItem) => (
               <TodoItem
                 key={todoItem.id}
                 id={todoItem.id}
@@ -94,7 +105,10 @@ export const PureStatefulTodoList = pureStatefulComponent<TodoListStateSpec>(
             ))}
           </ul>
         </section>
-        <TodoListFooter mode={mode} todoItems={props.state.todoItems} />
+        <TodoListFooter
+          todoItems={props.state.todoItems}
+          listMode={props.state.listMode}
+        />
       </>
     );
 

@@ -49,26 +49,25 @@ const newTodoPlusEditStyleText = `
     line-height: 1.4em;
     border: 0;
     color: inherit;
-    padding: 6px;
-    border: 1px solid #999;
-    box-shadow: inset 0 -1px 5px 0 rgba(0, 0, 0, 0.2);
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 `
 
 export const newTodoStyle = css`
+    padding: 16px 16px 16px 60px;
+    border: none;
+    background: rgba(0, 0, 0, 0.003);
+    box-shadow: inset 0 -2px 1px rgba(0,0,0,0.03);
     ${newTodoPlusEditStyleText}
-
-    .newTodo {
-        padding: 16px 16px 16px 60px;
-        border: none;
-        background: rgba(0, 0, 0, 0.003);
-        box-shadow: inset 0 -2px 1px rgba(0,0,0,0.03);
-    }
 `
 
-export const editStyle = css(newTodoPlusEditStyleText)
+export const editStyle = css`
+    padding: 6px;
+    border: 1px solid #999;
+    box-shadow: inset 0 -1px 5px 0 rgba(0, 0, 0, 0.2);
+    ${newTodoPlusEditStyleText}
+`
 
 export const mainStyle = css`
     position: relative;
@@ -120,50 +119,6 @@ export const todoListStyle = css`
         border-bottom: none;
     }
 
-    li.editing {
-        border-bottom: none;
-        padding: 0;
-    }
-
-    li.editing .edit {
-        display: block;
-        width: 506px;
-        padding: 12px 16px;
-        margin: 0 0 0 43px;
-    }
-
-    li .toggle {
-        text-align: center;
-        width: 40px;
-        /* auto, since non-WebKit browsers doesn't support input styling */
-        height: auto;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        margin: auto 0;
-        border: none; /* Mobile Safari */
-        -webkit-appearance: none;
-        appearance: none;
-    }
-
-    li .toggle {
-        opacity: 0;
-    }
-
-    li .toggle + label {
-        /*
-            Firefox requires # to be escaped - https://bugzilla.mozilla.org/show_bug.cgi?id=922433
-            IE and Edge requires *everything* to be escaped to render, so we do that instead of just the # - https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/7157459/
-        */
-        background-image: url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%22-10%20-18%20100%20135%22%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2250%22%20fill%3D%22none%22%20stroke%3D%22%23ededed%22%20stroke-width%3D%223%22/%3E%3C/svg%3E');
-        background-repeat: no-repeat;
-        background-position: center left;
-    }
-
-    li .toggle:checked + label {
-        background-image: url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%22-10%20-18%20100%20135%22%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2250%22%20fill%3D%22none%22%20stroke%3D%22%23bddad5%22%20stroke-width%3D%223%22/%3E%3Cpath%20fill%3D%22%235dc2af%22%20d%3D%22M72%2025L42%2071%2027%2056l-4%204%2020%2020%2034-52z%22/%3E%3C/svg%3E');
-    }
-
     li label {
         word-break: break-all;
         padding: 15px 15px 15px 60px;
@@ -172,17 +127,8 @@ export const todoListStyle = css`
         transition: color 0.4s;
     }
 
-    li.completed label {
-        color: #d9d9d9;
-        text-decoration: line-through;
-    }
-
     li .edit {
         display: none;
-    }
-
-    li.editing:last-child {
-        margin-bottom: -1px;
     }
 `
 
@@ -190,6 +136,29 @@ export const viewStyle = css`
 li.editing & {
     display: none;
 }
+`
+
+export const editingStyle = css`
+    border-bottom: none;
+    padding: 0;
+
+    &:last-child {
+        margin-bottom: -1px;
+    }
+
+    & .edit {
+        display: block;
+        width: 506px;
+        padding: 12px 16px;
+        margin: 0 0 0 43px;
+    }
+`
+
+export const completedStyle = css`
+    & label {
+        color: #d9d9d9;
+        text-decoration: line-through;
+    }
 `
 
 export const destroyStyle = css`
@@ -265,7 +234,7 @@ export const filtersStyle = css`
         display: inline;
     }
 
-    li a {
+    li span {
         color: inherit;
         margin: 3px;
         padding: 3px 7px;
@@ -274,13 +243,14 @@ export const filtersStyle = css`
         border-radius: 3px;
     }
 
-    li a:hover {
+    li span:hover {
+        cursor: pointer;
         border-color: rgba(175, 47, 47, 0.1);
     }
 `
 
 export const selectedStyle = css`
-    border-color: rgba(175, 47, 47, 0.2);
+    border-color: rgba(175, 47, 47, 0.2) !important;
 `
 
 export const clearCompletedStyle = css`
@@ -321,12 +291,44 @@ export const infoStyle = css`
 
 export const toggleStyle = css`
 @media screen and (-webkit-min-device-pixel-ratio:0) {
-	li & {
+    li & {
 		background: none;
 	}
 
 	li & {
 		height: 40px;
 	}
+
+    li & {
+        text-align: center;
+        width: 40px;
+        /* auto, since non-WebKit browsers doesn't support input styling */
+        height: auto;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin: auto 0;
+        border: none; /* Mobile Safari */
+        -webkit-appearance: none;
+        appearance: none;
+    }
+
+    li & {
+        opacity: 0;
+    }
+
+    li & + label {
+        /*
+            Firefox requires # to be escaped - https://bugzilla.mozilla.org/show_bug.cgi?id=922433
+            IE and Edge requires *everything* to be escaped to render, so we do that instead of just the # - https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/7157459/
+        */
+        background-image: url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%22-10%20-18%20100%20135%22%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2250%22%20fill%3D%22none%22%20stroke%3D%22%23ededed%22%20stroke-width%3D%223%22/%3E%3C/svg%3E');
+        background-repeat: no-repeat;
+        background-position: center left;
+    }
+
+    li &:checked + label {
+        background-image: url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%22-10%20-18%20100%20135%22%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2250%22%20fill%3D%22none%22%20stroke%3D%22%23bddad5%22%20stroke-width%3D%223%22/%3E%3Cpath%20fill%3D%22%235dc2af%22%20d%3D%22M72%2025L42%2071%2027%2056l-4%204%2020%2020%2034-52z%22/%3E%3C/svg%3E');
+    }
 }
 `

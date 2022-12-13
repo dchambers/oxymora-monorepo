@@ -4,7 +4,7 @@ import type { ChangeEventHandler, MouseEventHandler } from "react";
 import * as React from "react";
 import { usePureStatefulCallback } from "@dchambers/oxymora";
 import {
-  clearCompletedStyle,
+  completedStyle,
   destroyStyle,
   toggleStyle,
   viewStyle,
@@ -48,7 +48,7 @@ const TodoItem = (props: TodoItemProps) => {
   }));
 
   return (
-    <li css={completed ? clearCompletedStyle : undefined}>
+    <li css={completed ? completedStyle : undefined}>
       <div css={viewStyle}>
         <input
           type="checkbox"
