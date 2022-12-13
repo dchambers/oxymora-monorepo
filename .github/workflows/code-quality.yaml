@@ -1,0 +1,23 @@
+name: Code Quality
+on:
+  pull_request: {}
+
+jobs:
+  generate:
+    name: yarn generate:ci
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - run: yarn install --immutable --immutable-cache
+      - run: yarn generate:ci
+  compile:
+    name: yarn compile
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v3
+      - run: yarn install --immutable --immutable-cache
+      - run: yarn compile

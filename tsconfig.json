@@ -1,0 +1,17 @@
+{
+    "extends": "./tsconfig-base.json",
+    "compilerOptions": {
+      "noEmit": true
+    },
+    "references": [
+      {
+        "path": "./packages/oxymora"
+      },
+      {
+        "path": "./packages/oxymora-todomvc"
+      },
+      {
+        "path": "./packages/stateify"
+      },
+    ]
+}
