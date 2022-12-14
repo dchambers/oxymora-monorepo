@@ -9,9 +9,6 @@
         "path": "./packages/oxymora"
       },
       {
-        "path": "./packages/oxymora-todomvc"
-      },
-      {
         "path": "./packages/stateify"
       }
     ]
