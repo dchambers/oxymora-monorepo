@@ -1,6 +1,6 @@
 import type { Props } from "@dchambers/oxymora";
+import type { ChangeEventHandler, KeyboardEventHandler } from "react";
 
-import * as React from "react";
 import {
   pureStatefulComponent,
   usePureStatefulCallback,
@@ -36,8 +36,8 @@ export enum ListMode {
   Completed = "COMPLETED_ITEMS",
 }
 
-type InputChangeHandler = React.ChangeEventHandler<HTMLInputElement>;
-type InputKeyDownHandler = React.KeyboardEventHandler<HTMLInputElement>;
+type InputChangeHandler = ChangeEventHandler<HTMLInputElement>;
+type InputKeyDownHandler = KeyboardEventHandler<HTMLInputElement>;
 
 const defaultTodoList = {
   newTodo: "",

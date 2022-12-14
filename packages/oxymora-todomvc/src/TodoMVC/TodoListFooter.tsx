@@ -1,6 +1,5 @@
 import type { MouseEventHandler } from "react";
 
-import * as React from "react";
 import { usePureStatefulCallback } from "@dchambers/oxymora";
 import { TodoItems, TodoListStateSpec, ListMode } from "./TodoList";
 import {

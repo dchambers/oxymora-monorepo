@@ -1,7 +1,6 @@
 import type { TodoListStateSpec } from "./TodoList";
 import type { ChangeEventHandler, MouseEventHandler } from "react";
 
-import * as React from "react";
 import { usePureStatefulCallback } from "@dchambers/oxymora";
 import {
   completedStyle,

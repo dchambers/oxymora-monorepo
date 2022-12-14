@@ -1,9 +1,17 @@
 {
+  "extends": "../../tsconfig-base.json",
   "compilerOptions": {
-    "outDir": "dist",
+    "target": "ESNext",
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
+    ],
+    "esModuleInterop": false,
+    "module": "ESNext",
+    "noEmit": true,
     "jsxImportSource": "@emotion/react"
   },
-  "extends": "../../tsconfig-base.json",
   "include": [
     "src/**/*"
   ],

@@ -1,4 +1,4 @@
-import { StatefulTodoList } from "@dchambers/oxymora-todomvc";
+import { StatefulTodoList } from "./TodoMVC/TodoList";
 
 const App = () => (
   <div className="App">
