@@ -1,4 +1,6 @@
 import type { TodoListStateSpec } from "./TodoList";
+import type { Todo } from "./data-model";
+
 import {
   ChangeEventHandler,
   FocusEventHandler,
@@ -6,8 +8,9 @@ import {
   useEffect,
   useRef,
 } from "react";
-
+import { css } from "@emotion/react";
 import { usePureStatefulCallback } from "@dchambers/oxymora";
+
 import {
   completedStyle,
   destroyStyle,
@@ -17,11 +20,10 @@ import {
   listLabelHiddenStyle,
   notEditingStyle,
   toggleStyle,
-} from "./TodoListStyle";
-import { css } from "@emotion/react";
-import { TodoItemInfo } from "./todo-list-model";
+} from "./styles";
+import { removeTodoItem, updateTodoItem } from "./data-model";
 
-type TodoItemProps = TodoItemInfo;
+type TodoItemProps = Todo;
 
 const TodoItem = (props: TodoItemProps) => {
   const { id, description, completed, renameInProgress } = props;
@@ -35,78 +37,35 @@ const TodoItem = (props: TodoItemProps) => {
     TodoListStateSpec,
     ChangeEventHandler<HTMLInputElement>
   >((_event, { state }) => ({
-    state: {
-      ...state,
-      todoItems: state.todoItems.map((todoItem) =>
-        todoItem.id !== id
-          ? todoItem
-          : {
-              ...todoItem,
-              completed: !todoItem.completed,
-            }
-      ),
-    },
-  }));
-
-  const onTodoItemDoubleClick = usePureStatefulCallback<
-    TodoListStateSpec,
-    MouseEventHandler<HTMLLIElement>
-  >((_event, { state }) => ({
-    state: {
-      ...state,
-      todoItems: state.todoItems.map((todoItem) =>
-        todoItem.id !== id
-          ? todoItem
-          : {
-              ...todoItem,
-              renameInProgress: true,
-            }
-      ),
-    },
-  }));
-
-  const onRenamedTodoItemChange = usePureStatefulCallback<
-    TodoListStateSpec,
-    ChangeEventHandler<HTMLInputElement>
-  >((event, { state }) => ({
-    state: {
-      ...state,
-      todoItems: state.todoItems.map((todoItem) =>
-        todoItem.id !== id
-          ? todoItem
-          : {
-              ...todoItem,
-              description: event.target.value,
-            }
-      ),
-    },
-  }));
-
-  const onRenamedTodoItemBlur = usePureStatefulCallback<
-    TodoListStateSpec,
-    FocusEventHandler<HTMLInputElement>
-  >((_event, { state }) => ({
-    state: {
-      ...state,
-      todoItems: state.todoItems.map((todoItem) =>
-        todoItem.id !== id
-          ? todoItem
-          : {
-              ...todoItem,
-              renameInProgress: false,
-            }
-      ),
-    },
+    state: updateTodoItem(state, { id, completed: !completed }),
   }));
 
   const onRemoveTodoItemClick = usePureStatefulCallback<
     TodoListStateSpec,
     MouseEventHandler<HTMLButtonElement>
   >((_event, { state }) => ({
-    state: {
-      ...state,
-      todoItems: state.todoItems.filter((todoItem) => todoItem.id !== id),
-    },
+    state: removeTodoItem(state, id),
+  }));
+
+  const onTodoItemDoubleClick = usePureStatefulCallback<
+    TodoListStateSpec,
+    MouseEventHandler<HTMLLIElement>
+  >((_event, { state }) => ({
+    state: updateTodoItem(state, { id, renameInProgress: true }),
+  }));
+
+  const onRenamedTodoItemChange = usePureStatefulCallback<
+    TodoListStateSpec,
+    ChangeEventHandler<HTMLInputElement>
+  >((event, { state }) => ({
+    state: updateTodoItem(state, { id, description: event.target.value }),
+  }));
+
+  const onRenamedTodoItemBlur = usePureStatefulCallback<
+    TodoListStateSpec,
+    FocusEventHandler<HTMLInputElement>
+  >((_event, { state }) => ({
+    state: updateTodoItem(state, { id, renameInProgress: false }),
   }));
 
   return (
