@@ -1,12 +1,13 @@
 import type { Props } from "@dchambers/oxymora";
 import type { ChangeEventHandler, KeyboardEventHandler } from "react";
+import type { TodoListInfo, TodoItemInfo } from "./todo-list-model";
 
 import {
   pureStatefulComponent,
   usePureStatefulCallback,
 } from "@dchambers/oxymora";
 import stateify from "@dchambers/stateify";
-import TodoItem, { TodoItemProps } from "./TodoItem";
+import TodoItem from "./TodoItem";
 import TodoListFooter from "./TodoListFooter";
 import {
   infoStyle,
@@ -16,6 +17,8 @@ import {
   todoListStyle,
   toggleAllStyle,
 } from "./TodoListStyle";
+import { ListMode } from "./todo-list-model";
+import { getActiveTodoItems } from "./todo-list-utils";
 
 export type TodoListStateSpec = {
   State: TodoListInfo;
@@ -23,49 +26,26 @@ export type TodoListStateSpec = {
   OutputProps: {};
 };
 
-type TodoListInfo = {
-  toggleAllChecked: boolean;
-  newTodo: string;
-  todoItems: TodoItems;
-  listMode: ListMode;
-};
-
-export type TodoItems = Array<TodoItemProps>;
-
-export enum ListMode {
-  All = "ALL_ITEMS",
-  Active = "ACTIVE_ITEMS",
-  Completed = "COMPLETED_ITEMS",
-}
-
-type InputChangeHandler = ChangeEventHandler<HTMLInputElement>;
-type InputKeyDownHandler = KeyboardEventHandler<HTMLInputElement>;
+type TodoListProps = Props<TodoListStateSpec>;
 
 const defaultTodoList = {
+  listMode: ListMode.All,
   toggleAllChecked: false,
   newTodo: "",
   todoItems: [],
-  listMode: ListMode.All,
 };
-
-const isActiveItem = (todoItem: TodoItemProps) => !todoItem.completed;
-const isCompletedItem = (todoItem: TodoItemProps) => todoItem.completed;
 
 export const PureStatefulTodoList = pureStatefulComponent<TodoListStateSpec>(
   defaultTodoList,
-  (props: Props<TodoListStateSpec>) => {
-    const activeTodoItems =
-      props.state.listMode === ListMode.All
-        ? props.state.todoItems
-        : props.state.todoItems.filter(
-            props.state.listMode === ListMode.Active
-              ? isActiveItem
-              : isCompletedItem
-          );
+  (props: TodoListProps) => {
+    const activeTodoItems = getActiveTodoItems(
+      props.state.listMode,
+      props.state.todoItems
+    );
 
-    const onInputChangeHandler = usePureStatefulCallback<
+    const onNewTodoItemChange = usePureStatefulCallback<
       TodoListStateSpec,
-      InputChangeHandler
+      ChangeEventHandler<HTMLInputElement>
     >((event, { state }) => ({
       state: {
         ...state,
@@ -73,9 +53,9 @@ export const PureStatefulTodoList = pureStatefulComponent<TodoListStateSpec>(
       },
     }));
 
-    const onInputKeyDownHandler = usePureStatefulCallback<
+    const onNewTodoItemKeyDown = usePureStatefulCallback<
       TodoListStateSpec,
-      InputKeyDownHandler
+      KeyboardEventHandler<HTMLInputElement>
     >((event, { state }) => ({
       state:
         event.key !== "Enter"
@@ -95,9 +75,9 @@ export const PureStatefulTodoList = pureStatefulComponent<TodoListStateSpec>(
             },
     }));
 
-    const onToggleAllChangeHandler = usePureStatefulCallback<
+    const onToggleAllChange = usePureStatefulCallback<
       TodoListStateSpec,
-      InputChangeHandler
+      ChangeEventHandler<HTMLInputElement>
     >((_event, { state }) => ({
       state: {
         ...state,
@@ -140,8 +120,8 @@ export const PureStatefulTodoList = pureStatefulComponent<TodoListStateSpec>(
               css={newTodoStyle}
               placeholder="What needs to be done?"
               value={props.state.newTodo}
-              onChange={onInputChangeHandler}
-              onKeyDown={onInputKeyDownHandler}
+              onChange={onNewTodoItemChange}
+              onKeyDown={onNewTodoItemKeyDown}
             />
             {props.state.todoItems.length === 0 ? undefined : (
               <>
@@ -150,7 +130,7 @@ export const PureStatefulTodoList = pureStatefulComponent<TodoListStateSpec>(
                   type="checkbox"
                   css={toggleAllStyle}
                   checked={props.state.toggleAllChecked}
-                  onChange={onToggleAllChangeHandler}
+                  onChange={onToggleAllChange}
                 />
                 <label htmlFor="toggle-all" />
               </>
@@ -168,5 +148,5 @@ export const PureStatefulTodoList = pureStatefulComponent<TodoListStateSpec>(
 
 export const StatefulTodoList = stateify<
   TodoListStateSpec["State"],
-  Props<TodoListStateSpec>
+  TodoListProps
 >(PureStatefulTodoList);
