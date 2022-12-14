@@ -81,7 +81,7 @@ const TodoItem = (props: TodoItemProps) => {
           <input
             type="checkbox"
             css={toggleStyle}
-            value={completed ? "true" : "false"}
+            checked={completed}
             onChange={onTodoItemCompletedChange}
           />
           <label>{description}</label>
