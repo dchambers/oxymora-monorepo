@@ -43,10 +43,10 @@ const defaultTodoList = {
 
 export const PureStatefulTodoList = pureStatefulComponent<TodoListStateSpec>(
   defaultTodoList,
-  (props: TodoListProps) => {
+  ({ state: todoList }: TodoListProps) => {
     const activeTodoItems = getActiveTodoItems(
-      props.state.listMode,
-      props.state.todoItems
+      todoList.listMode,
+      todoList.todoItems
     );
 
     const onNewTodoItemChange = usePureStatefulCallback<
@@ -100,8 +100,8 @@ export const PureStatefulTodoList = pureStatefulComponent<TodoListStateSpec>(
           </ul>
         </section>
         <TodoListFooter
-          todoItems={props.state.todoItems}
-          listMode={props.state.listMode}
+          todoItems={todoList.todoItems}
+          listMode={todoList.listMode}
         />
       </>
     );
@@ -114,24 +114,24 @@ export const PureStatefulTodoList = pureStatefulComponent<TodoListStateSpec>(
             <input
               css={newTodoStyle}
               placeholder="What needs to be done?"
-              value={props.state.newTodo}
+              value={todoList.newTodo}
               onChange={onNewTodoItemChange}
               onKeyDown={onNewTodoItemKeyDown}
             />
-            {props.state.todoItems.length === 0 ? undefined : (
+            {todoList.todoItems.length === 0 ? undefined : (
               <>
                 <input
                   id="toggle-all"
                   type="checkbox"
                   css={toggleAllStyle}
-                  checked={props.state.toggleAllChecked}
+                  checked={todoList.toggleAllChecked}
                   onChange={onToggleAllChange}
                 />
                 <label htmlFor="toggle-all" />
               </>
             )}
           </header>
-          {props.state.todoItems.length === 0 ? false : listSections}
+          {todoList.todoItems.length === 0 ? false : listSections}
         </section>
         <footer css={infoStyle}>
           <p>Double-click to edit a todo</p>
