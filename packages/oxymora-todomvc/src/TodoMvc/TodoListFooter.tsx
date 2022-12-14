@@ -1,24 +1,26 @@
 import type { MouseEventHandler } from "react";
+import type { Todo } from "./data-model";
 
 import { usePureStatefulCallback } from "@dchambers/oxymora";
-import { TodoListStateSpec } from "./TodoList";
+
 import {
   clearCompletedStyle,
   filtersStyle,
   footerStyle,
   selectedStyle,
   todoCountStyle,
-} from "./TodoListStyle";
-import { ListMode, TodoItemInfo } from "./todo-list-model";
+} from "./styles";
+import { ListMode, updateTodoList } from "./data-model";
+import { TodoListStateSpec } from "./TodoList";
 
 type TodoListFooterProps = {
   listMode: ListMode;
-  todoItems: TodoItemInfo[];
+  todoItems: Todo[];
 };
 
 const TodoListFooter = ({ todoItems, listMode }: TodoListFooterProps) => {
   const remainingTodos = todoItems.filter(
-    (todoItem: TodoItemInfo) => todoItem.completed === false
+    (todoItem: Todo) => todoItem.completed === false
   );
 
   const changeListModeHandler = usePureStatefulCallback<
@@ -28,10 +30,9 @@ const TodoListFooter = ({ todoItems, listMode }: TodoListFooterProps) => {
     const dataAttributes = (event.target as HTMLSpanElement).dataset;
 
     return {
-      state: {
-        ...state,
+      state: updateTodoList(state, {
         listMode: dataAttributes.listMode as ListMode,
-      },
+      }),
     };
   });
 
@@ -39,12 +40,11 @@ const TodoListFooter = ({ todoItems, listMode }: TodoListFooterProps) => {
     TodoListStateSpec,
     MouseEventHandler<HTMLButtonElement>
   >((_event, { state }) => ({
-    state: {
-      ...state,
+    state: updateTodoList(state, {
       todoItems: state.todoItems.filter(
         (todoItem) => todoItem.completed === false
       ),
-    },
+    }),
   }));
 
   return (

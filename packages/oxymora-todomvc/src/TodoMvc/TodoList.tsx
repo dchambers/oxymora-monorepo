@@ -1,14 +1,13 @@
 import type { Props } from "@dchambers/oxymora";
 import type { ChangeEventHandler, KeyboardEventHandler } from "react";
-import type { TodoListInfo, TodoItemInfo } from "./todo-list-model";
+import type { Todos } from "./data-model";
 
 import {
   pureStatefulComponent,
   usePureStatefulCallback,
 } from "@dchambers/oxymora";
 import stateify from "@dchambers/stateify";
-import TodoItem from "./TodoItem";
-import TodoListFooter from "./TodoListFooter";
+
 import {
   infoStyle,
   mainStyle,
@@ -16,12 +15,19 @@ import {
   todoAppStyle,
   todoListStyle,
   toggleAllStyle,
-} from "./TodoListStyle";
-import { ListMode } from "./todo-list-model";
-import { getActiveTodoItems } from "./todo-list-utils";
+} from "./styles";
+import {
+  ListMode,
+  addTodoItem,
+  getActiveTodoItems,
+  updateTodoItems,
+  updateTodoList,
+} from "./data-model";
+import TodoItem from "./TodoItem";
+import TodoListFooter from "./TodoListFooter";
 
 export type TodoListStateSpec = {
-  State: TodoListInfo;
+  State: Todos;
   InputProps: {};
   OutputProps: {};
 };
@@ -47,10 +53,7 @@ export const PureStatefulTodoList = pureStatefulComponent<TodoListStateSpec>(
       TodoListStateSpec,
       ChangeEventHandler<HTMLInputElement>
     >((event, { state }) => ({
-      state: {
-        ...state,
-        newTodo: event.target.value,
-      },
+      state: updateTodoList(state, { newTodo: event.target.value }),
     }));
 
     const onNewTodoItemKeyDown = usePureStatefulCallback<
@@ -60,33 +63,25 @@ export const PureStatefulTodoList = pureStatefulComponent<TodoListStateSpec>(
       state:
         event.key !== "Enter"
           ? state
-          : {
-              ...state,
-              newTodo: "",
-              todoItems: [
-                ...state.todoItems,
-                {
-                  id: `${state.newTodo}@${Date.now()}`,
-                  description: state.newTodo,
-                  completed: false,
-                  renameInProgress: false,
-                },
-              ],
-            },
+          : updateTodoList(
+              addTodoItem(state, {
+                id: `${state.newTodo}@${Date.now()}`,
+                description: state.newTodo,
+                completed: false,
+                renameInProgress: false,
+              }),
+              { newTodo: "" }
+            ),
     }));
 
     const onToggleAllChange = usePureStatefulCallback<
       TodoListStateSpec,
       ChangeEventHandler<HTMLInputElement>
     >((_event, { state }) => ({
-      state: {
-        ...state,
-        toggleAllChecked: !state.toggleAllChecked,
-        todoItems: state.todoItems.map((todoItem) => ({
-          ...todoItem,
-          completed: !state.toggleAllChecked,
-        })),
-      },
+      state: updateTodoList(
+        updateTodoItems(state, { completed: !state.toggleAllChecked }),
+        { toggleAllChecked: !state.toggleAllChecked }
+      ),
     }));
 
     const listSections = (
