@@ -14,6 +14,7 @@ import {
   newTodoStyle,
   todoAppStyle,
   todoListStyle,
+  toggleAllStyle,
 } from "./TodoListStyle";
 
 export type TodoListStateSpec = {
@@ -23,6 +24,7 @@ export type TodoListStateSpec = {
 };
 
 type TodoListInfo = {
+  toggleAllChecked: boolean;
   newTodo: string;
   todoItems: TodoItems;
   listMode: ListMode;
@@ -40,6 +42,7 @@ type InputChangeHandler = ChangeEventHandler<HTMLInputElement>;
 type InputKeyDownHandler = KeyboardEventHandler<HTMLInputElement>;
 
 const defaultTodoList = {
+  toggleAllChecked: false,
   newTodo: "",
   todoItems: [],
   listMode: ListMode.All,
@@ -86,9 +89,24 @@ export const PureStatefulTodoList = pureStatefulComponent<TodoListStateSpec>(
                   id: `${state.newTodo}@${Date.now()}`,
                   description: state.newTodo,
                   completed: false,
+                  renameInProgress: false,
                 },
               ],
             },
+    }));
+
+    const onToggleAllChangeHandler = usePureStatefulCallback<
+      TodoListStateSpec,
+      InputChangeHandler
+    >((_event, { state }) => ({
+      state: {
+        ...state,
+        toggleAllChecked: !state.toggleAllChecked,
+        todoItems: state.todoItems.map((todoItem) => ({
+          ...todoItem,
+          completed: !state.toggleAllChecked,
+        })),
+      },
     }));
 
     const listSections = (
@@ -101,6 +119,7 @@ export const PureStatefulTodoList = pureStatefulComponent<TodoListStateSpec>(
                 id={todoItem.id}
                 description={todoItem.description}
                 completed={todoItem.completed}
+                renameInProgress={todoItem.renameInProgress}
               />
             ))}
           </ul>
@@ -124,6 +143,18 @@ export const PureStatefulTodoList = pureStatefulComponent<TodoListStateSpec>(
               onChange={onInputChangeHandler}
               onKeyDown={onInputKeyDownHandler}
             />
+            {props.state.todoItems.length === 0 ? undefined : (
+              <>
+                <input
+                  id="toggle-all"
+                  type="checkbox"
+                  css={toggleAllStyle}
+                  checked={props.state.toggleAllChecked}
+                  onChange={onToggleAllChangeHandler}
+                />
+                <label htmlFor="toggle-all" />
+              </>
+            )}
           </header>
           {props.state.todoItems.length === 0 ? false : listSections}
         </section>

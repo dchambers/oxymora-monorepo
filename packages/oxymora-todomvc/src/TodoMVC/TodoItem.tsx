@@ -1,25 +1,46 @@
 import type { TodoListStateSpec } from "./TodoList";
-import type { ChangeEventHandler, MouseEventHandler } from "react";
+import {
+  ChangeEventHandler,
+  FocusEventHandler,
+  MouseEventHandler,
+  useEffect,
+  useRef,
+} from "react";
 
 import { usePureStatefulCallback } from "@dchambers/oxymora";
 import {
   completedStyle,
   destroyStyle,
+  editingStyle,
+  editStyle,
+  listEditingStyle,
+  listLabelHiddenStyle,
+  notEditingStyle,
   toggleStyle,
-  viewStyle,
 } from "./TodoListStyle";
+import { css } from "@emotion/react";
 
 export type TodoItemProps = {
   id: string;
   description: string;
   completed: boolean;
+  renameInProgress: boolean;
 };
 
 type CheckboxChangeHandler = ChangeEventHandler<HTMLInputElement>;
+type ListClickHandler = MouseEventHandler<HTMLLIElement>;
 type ButtonClickHandler = MouseEventHandler<HTMLButtonElement>;
+type InputChangeHandler = ChangeEventHandler<HTMLInputElement>;
+type InputBlurHandler = FocusEventHandler<HTMLInputElement>;
 
 const TodoItem = (props: TodoItemProps) => {
-  const { id, description, completed } = props;
+  const { id, description, completed, renameInProgress } = props;
+  const inputReference = useRef(null as HTMLInputElement | null);
+
+  useEffect(() => {
+    inputReference.current?.focus();
+  }, [renameInProgress]);
+
   const onCheckboxChangeHandler = usePureStatefulCallback<
     TodoListStateSpec,
     CheckboxChangeHandler
@@ -36,6 +57,57 @@ const TodoItem = (props: TodoItemProps) => {
       ),
     },
   }));
+
+  const onDoubleClickHandler = usePureStatefulCallback<
+    TodoListStateSpec,
+    ListClickHandler
+  >((_event, { state }) => ({
+    state: {
+      ...state,
+      todoItems: state.todoItems.map((todoItem) =>
+        todoItem.id !== id
+          ? todoItem
+          : {
+              ...todoItem,
+              renameInProgress: true,
+            }
+      ),
+    },
+  }));
+
+  const onInputChangeHandler = usePureStatefulCallback<
+    TodoListStateSpec,
+    InputChangeHandler
+  >((event, { state }) => ({
+    state: {
+      ...state,
+      todoItems: state.todoItems.map((todoItem) =>
+        todoItem.id !== id
+          ? todoItem
+          : {
+              ...todoItem,
+              description: event.target.value,
+            }
+      ),
+    },
+  }));
+  const onBlurHandler = usePureStatefulCallback<
+    TodoListStateSpec,
+    InputBlurHandler
+  >((_event, { state }) => ({
+    state: {
+      ...state,
+      todoItems: state.todoItems.map((todoItem) =>
+        todoItem.id !== id
+          ? todoItem
+          : {
+              ...todoItem,
+              renameInProgress: false,
+            }
+      ),
+    },
+  }));
+
   const onButtonClickHandler = usePureStatefulCallback<
     TodoListStateSpec,
     ButtonClickHandler
@@ -47,16 +119,39 @@ const TodoItem = (props: TodoItemProps) => {
   }));
 
   return (
-    <li css={completed ? completedStyle : undefined}>
-      <div css={viewStyle}>
+    <li
+      css={css`
+        ${completed ? completedStyle : undefined}
+        ${renameInProgress ? listEditingStyle : undefined}
+      `}
+      onDoubleClick={onDoubleClickHandler}
+    >
+      <div>
+        <div css={renameInProgress ? listLabelHiddenStyle : undefined}>
+          <input
+            type="checkbox"
+            css={toggleStyle}
+            value={completed ? "true" : "false"}
+            onChange={onCheckboxChangeHandler}
+          />
+          <label>{description}</label>
+          <button css={destroyStyle} onClick={onButtonClickHandler} />
+        </div>
         <input
-          type="checkbox"
-          css={toggleStyle}
-          value={completed ? "true" : "false"}
-          onChange={onCheckboxChangeHandler}
+          css={css`
+            ${editStyle}
+            ${renameInProgress ? editingStyle : notEditingStyle}
+          `}
+          value={description}
+          ref={inputReference}
+          onChange={onInputChangeHandler}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") {
+              (event.target as HTMLInputElement).blur();
+            }
+          }}
+          onBlur={onBlurHandler}
         />
-        <label>{description}</label>
-        <button css={destroyStyle} onClick={onButtonClickHandler} />
       </div>
     </li>
   );
