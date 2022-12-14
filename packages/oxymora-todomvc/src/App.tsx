@@ -1,4 +1,4 @@
-import { StatefulTodoList } from "./TodoMvcTmp/TodoList";
+import { StatefulTodoList } from "./TodoMvc/TodoList";
 
 const App = () => (
   <div className="App">
