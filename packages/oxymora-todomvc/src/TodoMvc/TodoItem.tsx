@@ -19,19 +19,9 @@ import {
   toggleStyle,
 } from "./TodoListStyle";
 import { css } from "@emotion/react";
+import { TodoItemInfo } from "./todo-list-model";
 
-export type TodoItemProps = {
-  id: string;
-  description: string;
-  completed: boolean;
-  renameInProgress: boolean;
-};
-
-type CheckboxChangeHandler = ChangeEventHandler<HTMLInputElement>;
-type ListClickHandler = MouseEventHandler<HTMLLIElement>;
-type ButtonClickHandler = MouseEventHandler<HTMLButtonElement>;
-type InputChangeHandler = ChangeEventHandler<HTMLInputElement>;
-type InputBlurHandler = FocusEventHandler<HTMLInputElement>;
+type TodoItemProps = TodoItemInfo;
 
 const TodoItem = (props: TodoItemProps) => {
   const { id, description, completed, renameInProgress } = props;
@@ -41,9 +31,9 @@ const TodoItem = (props: TodoItemProps) => {
     inputReference.current?.focus();
   }, [renameInProgress]);
 
-  const onCheckboxChangeHandler = usePureStatefulCallback<
+  const onTodoItemCompletedChange = usePureStatefulCallback<
     TodoListStateSpec,
-    CheckboxChangeHandler
+    ChangeEventHandler<HTMLInputElement>
   >((_event, { state }) => ({
     state: {
       ...state,
@@ -58,9 +48,9 @@ const TodoItem = (props: TodoItemProps) => {
     },
   }));
 
-  const onDoubleClickHandler = usePureStatefulCallback<
+  const onTodoItemDoubleClick = usePureStatefulCallback<
     TodoListStateSpec,
-    ListClickHandler
+    MouseEventHandler<HTMLLIElement>
   >((_event, { state }) => ({
     state: {
       ...state,
@@ -75,9 +65,9 @@ const TodoItem = (props: TodoItemProps) => {
     },
   }));
 
-  const onInputChangeHandler = usePureStatefulCallback<
+  const onRenamedTodoItemChange = usePureStatefulCallback<
     TodoListStateSpec,
-    InputChangeHandler
+    ChangeEventHandler<HTMLInputElement>
   >((event, { state }) => ({
     state: {
       ...state,
@@ -91,9 +81,10 @@ const TodoItem = (props: TodoItemProps) => {
       ),
     },
   }));
-  const onBlurHandler = usePureStatefulCallback<
+
+  const onRenamedTodoItemBlur = usePureStatefulCallback<
     TodoListStateSpec,
-    InputBlurHandler
+    FocusEventHandler<HTMLInputElement>
   >((_event, { state }) => ({
     state: {
       ...state,
@@ -108,9 +99,9 @@ const TodoItem = (props: TodoItemProps) => {
     },
   }));
 
-  const onButtonClickHandler = usePureStatefulCallback<
+  const onRemoveTodoItemClick = usePureStatefulCallback<
     TodoListStateSpec,
-    ButtonClickHandler
+    MouseEventHandler<HTMLButtonElement>
   >((_event, { state }) => ({
     state: {
       ...state,
@@ -124,7 +115,7 @@ const TodoItem = (props: TodoItemProps) => {
         ${completed ? completedStyle : undefined}
         ${renameInProgress ? listEditingStyle : undefined}
       `}
-      onDoubleClick={onDoubleClickHandler}
+      onDoubleClick={onTodoItemDoubleClick}
     >
       <div>
         <div css={renameInProgress ? listLabelHiddenStyle : undefined}>
@@ -132,10 +123,10 @@ const TodoItem = (props: TodoItemProps) => {
             type="checkbox"
             css={toggleStyle}
             value={completed ? "true" : "false"}
-            onChange={onCheckboxChangeHandler}
+            onChange={onTodoItemCompletedChange}
           />
           <label>{description}</label>
-          <button css={destroyStyle} onClick={onButtonClickHandler} />
+          <button css={destroyStyle} onClick={onRemoveTodoItemClick} />
         </div>
         <input
           css={css`
@@ -144,13 +135,13 @@ const TodoItem = (props: TodoItemProps) => {
           `}
           value={description}
           ref={inputReference}
-          onChange={onInputChangeHandler}
+          onChange={onRenamedTodoItemChange}
           onKeyDown={(event) => {
             if (event.key === "Enter") {
               (event.target as HTMLInputElement).blur();
             }
           }}
-          onBlur={onBlurHandler}
+          onBlur={onRenamedTodoItemBlur}
         />
       </div>
     </li>

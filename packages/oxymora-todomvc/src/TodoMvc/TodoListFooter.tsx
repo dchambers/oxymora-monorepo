@@ -1,7 +1,7 @@
 import type { MouseEventHandler } from "react";
 
 import { usePureStatefulCallback } from "@dchambers/oxymora";
-import { TodoItems, TodoListStateSpec, ListMode } from "./TodoList";
+import { TodoListStateSpec } from "./TodoList";
 import {
   clearCompletedStyle,
   filtersStyle,
@@ -9,23 +9,21 @@ import {
   selectedStyle,
   todoCountStyle,
 } from "./TodoListStyle";
+import { ListMode, TodoItemInfo } from "./todo-list-model";
 
 type TodoListFooterProps = {
-  todoItems: TodoItems;
   listMode: ListMode;
+  todoItems: TodoItemInfo[];
 };
-
-type ButtonClickHandler = MouseEventHandler<HTMLButtonElement>;
-type SpanClickHandler = MouseEventHandler<HTMLSpanElement>;
 
 const TodoListFooter = ({ todoItems, listMode }: TodoListFooterProps) => {
   const remainingTodos = todoItems.filter(
-    (todoItem) => todoItem.completed === false
+    (todoItem: TodoItemInfo) => todoItem.completed === false
   );
 
   const changeListModeHandler = usePureStatefulCallback<
     TodoListStateSpec,
-    SpanClickHandler
+    MouseEventHandler<HTMLSpanElement>
   >((event, { state }) => {
     const dataAttributes = (event.target as HTMLSpanElement).dataset;
 
@@ -39,7 +37,7 @@ const TodoListFooter = ({ todoItems, listMode }: TodoListFooterProps) => {
 
   const clearCompletedHandler = usePureStatefulCallback<
     TodoListStateSpec,
-    ButtonClickHandler
+    MouseEventHandler<HTMLButtonElement>
   >((_event, { state }) => ({
     state: {
       ...state,
