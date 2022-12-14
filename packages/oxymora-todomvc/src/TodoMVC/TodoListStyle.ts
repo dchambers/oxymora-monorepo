@@ -86,7 +86,7 @@ export const toggleAllStyle = css`
         height: 34px;
         font-size: 0;
         position: absolute;
-        top: -52px;
+        top: 14px;
         left: -13px;
         -webkit-transform: rotate(90deg);
         transform: rotate(90deg);
@@ -132,26 +132,28 @@ export const todoListStyle = css`
     }
 `
 
-export const viewStyle = css`
-li.editing & {
+export const notEditingStyle = css`
     display: none;
-}
 `
 
 export const editingStyle = css`
+    display: block;
+    width: 506px;
+    padding: 12px 16px;
+    margin: 0 0 0 43px;
+`
+
+export const listEditingStyle = css`
     border-bottom: none;
     padding: 0;
 
     &:last-child {
         margin-bottom: -1px;
     }
+`
 
-    & .edit {
-        display: block;
-        width: 506px;
-        padding: 12px 16px;
-        margin: 0 0 0 43px;
-    }
+export const listLabelHiddenStyle = css`
+    display: none;
 `
 
 export const completedStyle = css`
