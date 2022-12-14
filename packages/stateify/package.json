@@ -2,7 +2,7 @@
     "name": "@dchambers/stateify",
     "version": "0.1.0",
     "license": "MIT",
-    "main": "dist/src/stateify.jsx",
+    "main": "dist/src/stateify.js",
     "scripts": {
         "compile": "tsc --build"
     },

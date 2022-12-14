@@ -2,7 +2,7 @@
     "name": "@dchambers/oxymora",
     "version": "0.1.0",
     "license": "MIT",
-    "main": "dist/src/oxymora.jsx",
+    "main": "dist/src/oxymora.js",
     "scripts": {
         "compile": "tsc --build"
     },

@@ -1,7 +1,8 @@
 {
     "extends": "./tsconfig-base.json",
     "compilerOptions": {
-      "noEmit": true
+      "noEmit": true,
+      "jsxImportSource": "@emotion/react" // TODO: understand why we need this as it really shouldn't be needed
     },
     "references": [
       {
@@ -12,6 +13,6 @@
       },
       {
         "path": "./packages/stateify"
-      },
+      }
     ]
 }
