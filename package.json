@@ -6,7 +6,7 @@
     "packages/*"
   ],
   "scripts": {
-    "generate": "yarn workspaces-to-typescript-project-references",
+    "generate": "yarn workspaces-to-typescript-project-references && yarn dedupe",
     "generate:ci": "yarn generate && yarn catch-uncommitted",
     "compile": "tsc --build",
     "compile:clean": "tsc --build --clean"
