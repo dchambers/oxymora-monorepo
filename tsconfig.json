@@ -9,7 +9,7 @@
         "path": "./packages/oxymora"
       },
       {
-        "path": "./packages/stateify"
+        "path": "./packages/pure-stateful-component"
       }
     ]
 }

@@ -1,5 +1,5 @@
 {
-  "name": "@dchambers/oxymora-monorepo",
+  "name": "@oxymora/monorepo",
   "packageManager": "yarn@3.3.0",
   "license": "MIT",
   "workspaces": [

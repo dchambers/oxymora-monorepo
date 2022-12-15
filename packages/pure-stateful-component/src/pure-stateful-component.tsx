@@ -1,16 +1,16 @@
 import { useState } from "react";
 
-export type Component<P> = (props: P) => JSX.Element;
+export type PureStatefulComponent<
+  S,
+  P extends PureStatefulComponentProps<S>
+> = Component<P>;
 
 export type PureStatefulComponentProps<S> = {
   state: S;
   onStateChange: (updatedState: S) => void;
 };
 
-export type PureStatefulComponent<
-  S,
-  P extends PureStatefulComponentProps<S>
-> = Component<P>;
+export type Component<P> = (props: P) => JSX.Element;
 
 export type StateifiedProps<S, P extends PureStatefulComponentProps<S>> = Omit<
   P,

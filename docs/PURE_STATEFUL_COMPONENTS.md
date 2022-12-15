@@ -27,7 +27,7 @@ For a demonstration of this take a look at the [Todo MVC Demo](../README.md#try-
 
 ## Other Implementations?
 
-The `PureStatefulComponent` interface could actually be implemented by libraries other than Oxymora in the future, and these might have very different design goals. Oxymora is simply my opinionated take on a library that produces pure-stateful components. For this reason, the `makeStateful` function within `@dchambers/oxymora` is actually just a re-export from `@dchambers/stateify`.
+The `PureStatefulComponent` interface could actually be implemented by libraries other than Oxymora in the future, and these might have very different design goals. Oxymora is simply my opinionated take on a library that produces pure-stateful components. For this reason, the `makeStateful` function within `oxymora` is actually just a re-export from `pure-stateful-component`.
 
 ## Which Components Should Be Pure-Stateful?
 

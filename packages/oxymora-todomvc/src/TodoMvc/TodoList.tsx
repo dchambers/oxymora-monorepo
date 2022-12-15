@@ -1,4 +1,4 @@
-import type { Props } from "@dchambers/oxymora";
+import type { Props } from "oxymora";
 import type { ChangeEventHandler, KeyboardEventHandler } from "react";
 import type { Todos } from "./data-model";
 
@@ -6,7 +6,7 @@ import {
   pureStatefulComponent,
   usePureStatefulCallback,
   makeStateful,
-} from "@dchambers/oxymora";
+} from "oxymora";
 
 import {
   infoStyle,

@@ -1,7 +1,7 @@
 import type { MouseEventHandler } from "react";
 import type { Todo } from "./data-model";
 
-import { usePureStatefulCallback } from "@dchambers/oxymora";
+import { usePureStatefulCallback } from "oxymora";
 
 import {
   clearCompletedStyle,
