@@ -1,6 +1,6 @@
 {
     "name": "@oxymora/oxymora",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "license": "MIT",
     "main": "dist/src/oxymora.js",
     "files": [
@@ -18,7 +18,7 @@
         "prepublish": "yarn workspace @oxymora/monorepo node scripts/publish-git-tag.sh packages/oxymora"
     },
     "dependencies": {
-        "@oxymora/pure-stateful-component": "^0.1.0"
+        "@oxymora/pure-stateful-component": "^0.1.1"
     },
     "peerDependencies": {
         "react": "^18.0.0"

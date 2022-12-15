@@ -462,11 +462,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@oxymora/oxymora@^0.1.0, @oxymora/oxymora@workspace:packages/oxymora":
+"@oxymora/oxymora@^0.1.1, @oxymora/oxymora@workspace:packages/oxymora":
   version: 0.0.0-use.local
   resolution: "@oxymora/oxymora@workspace:packages/oxymora"
   dependencies:
-    "@oxymora/pure-stateful-component": ^0.1.0
+    "@oxymora/pure-stateful-component": ^0.1.1
     react: ^18.2.0
     typescript: ^4.9.4
   peerDependencies:
@@ -474,7 +474,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@oxymora/pure-stateful-component@^0.1.0, @oxymora/pure-stateful-component@workspace:packages/pure-stateful-component":
+"@oxymora/pure-stateful-component@^0.1.1, @oxymora/pure-stateful-component@workspace:packages/pure-stateful-component":
   version: 0.0.0-use.local
   resolution: "@oxymora/pure-stateful-component@workspace:packages/pure-stateful-component"
   dependencies:
@@ -491,7 +491,7 @@ __metadata:
   dependencies:
     "@emotion/core": ^11.0.0
     "@emotion/react": ^11.10.5
-    "@oxymora/oxymora": ^0.1.0
+    "@oxymora/oxymora": ^0.1.1
     "@swc/plugin-emotion": ^2.5.32
     "@types/react": ^18.0.26
     "@types/react-dom": ^18.0.9
