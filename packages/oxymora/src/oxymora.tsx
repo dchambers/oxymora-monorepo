@@ -1,7 +1,6 @@
 import type { SyntheticEvent } from "react";
 import type { PureStatefulComponentProps } from "@dchambers/stateify";
 
-import * as React from "react";
 import { createContext, useContext } from "react";
 
 type StateSpec = {
@@ -34,6 +33,21 @@ const ComponentContext = createContext({
   state: undefined as unknown,
   onStateChange: (value: unknown) => {},
 });
+
+export const pureStatefulComponent =
+  <SS extends StateSpec>(
+    initialState: SS["State"],
+    Component: (props: Props<SS>) => JSX.Element
+  ) =>
+  (props: Props<SS>) => {
+    const state = props.state === undefined ? initialState : props.state;
+
+    return (
+      <ComponentContext.Provider value={{ ...props, state }}>
+        <Component {...props} state={state} />
+      </ComponentContext.Provider>
+    );
+  };
 
 export const usePureStatefulCallback = <
   SS extends StateSpec,
@@ -69,17 +83,4 @@ export const usePureStatefulCallback = <
   return wrappingEventHandler;
 };
 
-export const pureStatefulComponent =
-  <SS extends StateSpec>(
-    initialState: SS["State"],
-    Component: (props: Props<SS>) => JSX.Element
-  ) =>
-  (props: Props<SS>) => {
-    const state = props.state === undefined ? initialState : props.state;
-
-    return (
-      <ComponentContext.Provider value={{ ...props, state }}>
-        <Component {...props} state={state} />
-      </ComponentContext.Provider>
-    );
-  };
+export { default as makeStateful } from "@dchambers/stateify";

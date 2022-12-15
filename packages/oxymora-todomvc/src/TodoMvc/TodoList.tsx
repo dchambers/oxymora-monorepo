@@ -5,8 +5,8 @@ import type { Todos } from "./data-model";
 import {
   pureStatefulComponent,
   usePureStatefulCallback,
+  makeStateful,
 } from "@dchambers/oxymora";
-import stateify from "@dchambers/stateify";
 
 import {
   infoStyle,
@@ -141,7 +141,7 @@ export const PureStatefulTodoList = pureStatefulComponent<TodoListStateSpec>(
   }
 );
 
-export const StatefulTodoList = stateify<
+export const StatefulTodoList = makeStateful<
   TodoListStateSpec["State"],
   TodoListProps
 >(PureStatefulTodoList);

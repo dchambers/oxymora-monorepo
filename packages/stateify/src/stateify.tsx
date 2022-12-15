@@ -1,4 +1,3 @@
-import * as React from "react";
 import { useState } from "react";
 
 export type Component<P> = (props: P) => JSX.Element;
@@ -18,7 +17,7 @@ export type StateifiedProps<S, P extends PureStatefulComponentProps<S>> = Omit<
   "state" | "onStateChange"
 >;
 
-const stateify =
+const makeStateful =
   <S, P extends PureStatefulComponentProps<S>>(
     Component: PureStatefulComponent<S, P>
   ): Component<StateifiedProps<S, P>> =>
@@ -33,4 +32,4 @@ const stateify =
     );
   };
 
-export default stateify;
+export default makeStateful;
