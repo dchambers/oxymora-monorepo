@@ -1,12 +1,12 @@
-import type { Props } from "@dchambers/oxymora";
+import type { Props } from "@oxymora/oxymora";
 import type { ChangeEventHandler, KeyboardEventHandler } from "react";
 import type { Todos } from "./data-model";
 
 import {
   pureStatefulComponent,
   usePureStatefulCallback,
-} from "@dchambers/oxymora";
-import stateify from "@dchambers/stateify";
+  makeStateful,
+} from "@oxymora/oxymora";
 
 import {
   infoStyle,
@@ -141,7 +141,7 @@ export const PureStatefulTodoList = pureStatefulComponent<TodoListStateSpec>(
   }
 );
 
-export const StatefulTodoList = stateify<
+export const StatefulTodoList = makeStateful<
   TodoListStateSpec["State"],
   TodoListProps
 >(PureStatefulTodoList);

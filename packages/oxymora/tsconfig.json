@@ -8,7 +8,7 @@
   },
   "references": [
     {
-      "path": "../stateify"
+      "path": "../pure-stateful-component"
     }
   ]
 }

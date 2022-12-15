@@ -86,40 +86,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@dchambers/oxymora-monorepo@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "@dchambers/oxymora-monorepo@workspace:."
-  dependencies:
-    "@monorepo-utils/workspaces-to-typescript-project-references": ^2.9.0
-    "@types/node": ^18.11.14
-    catch-uncommitted: ^2.0.0
-    typescript: ^4.9.4
-  languageName: unknown
-  linkType: soft
-
-"@dchambers/oxymora@^0.1.0, @dchambers/oxymora@workspace:packages/oxymora":
-  version: 0.0.0-use.local
-  resolution: "@dchambers/oxymora@workspace:packages/oxymora"
-  dependencies:
-    "@dchambers/stateify": ^0.1.0
-    react: ^18.2.0
-    typescript: ^4.9.4
-  peerDependencies:
-    react: ^18.0.0
-  languageName: unknown
-  linkType: soft
-
-"@dchambers/stateify@^0.1.0, @dchambers/stateify@workspace:packages/stateify":
-  version: 0.0.0-use.local
-  resolution: "@dchambers/stateify@workspace:packages/stateify"
-  dependencies:
-    react: ^18.2.0
-    typescript: ^4.9.4
-  peerDependencies:
-    react: ^18.0.0
-  languageName: unknown
-  linkType: soft
-
 "@emotion/babel-plugin@npm:^11.10.5":
   version: 11.10.5
   resolution: "@emotion/babel-plugin@npm:11.10.5"
@@ -484,6 +450,58 @@ __metadata:
   checksum: 52dc02259d98da517fae4cb3a0a3850227bdae4939dda1980b788a7670636ca2b4a01b58df03dd5f65c1e3cb70c50fa8ce5762b582b3f499ec30ee5ce1fd9380
   languageName: node
   linkType: hard
+
+"@oxymora/monorepo@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@oxymora/monorepo@workspace:."
+  dependencies:
+    "@monorepo-utils/workspaces-to-typescript-project-references": ^2.9.0
+    "@types/node": ^18.11.14
+    catch-uncommitted: ^2.0.0
+    typescript: ^4.9.4
+  languageName: unknown
+  linkType: soft
+
+"@oxymora/oxymora@^0.1.0, @oxymora/oxymora@workspace:packages/oxymora":
+  version: 0.0.0-use.local
+  resolution: "@oxymora/oxymora@workspace:packages/oxymora"
+  dependencies:
+    "@oxymora/pure-stateful-component": ^0.1.0
+    react: ^18.2.0
+    typescript: ^4.9.4
+  peerDependencies:
+    react: ^18.0.0
+  languageName: unknown
+  linkType: soft
+
+"@oxymora/pure-stateful-component@^0.1.0, @oxymora/pure-stateful-component@workspace:packages/pure-stateful-component":
+  version: 0.0.0-use.local
+  resolution: "@oxymora/pure-stateful-component@workspace:packages/pure-stateful-component"
+  dependencies:
+    react: ^18.2.0
+    typescript: ^4.9.4
+  peerDependencies:
+    react: ^18.0.0
+  languageName: unknown
+  linkType: soft
+
+"@oxymora/todomvc@workspace:packages/oxymora-todomvc":
+  version: 0.0.0-use.local
+  resolution: "@oxymora/todomvc@workspace:packages/oxymora-todomvc"
+  dependencies:
+    "@emotion/core": ^11.0.0
+    "@emotion/react": ^11.10.5
+    "@oxymora/oxymora": ^0.1.0
+    "@swc/plugin-emotion": ^2.5.32
+    "@types/react": ^18.0.26
+    "@types/react-dom": ^18.0.9
+    plugin-react-swc-emotion: ^3.0.1
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    typescript: ^4.9.4
+    vite: ^4.0.1
+  languageName: unknown
+  linkType: soft
 
 "@swc/core-darwin-arm64@npm:1.3.22":
   version: 1.3.22
@@ -2585,24 +2603,6 @@ __metadata:
   checksum: 35703ac889d419cf2aceef63daeadbe4e77227c39ab6287eeb6c1b36a746b364f50ba22e88591f5d017bc54685d8137bc2d328d0a896e4d3fd22093c0f32a9ad
   languageName: node
   linkType: hard
-
-"vite-project@workspace:packages/oxymora-todomvc":
-  version: 0.0.0-use.local
-  resolution: "vite-project@workspace:packages/oxymora-todomvc"
-  dependencies:
-    "@dchambers/oxymora": ^0.1.0
-    "@emotion/core": ^11.0.0
-    "@emotion/react": ^11.10.5
-    "@swc/plugin-emotion": ^2.5.32
-    "@types/react": ^18.0.26
-    "@types/react-dom": ^18.0.9
-    plugin-react-swc-emotion: ^3.0.1
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    typescript: ^4.9.4
-    vite: ^4.0.1
-  languageName: unknown
-  linkType: soft
 
 "vite@npm:^4.0.1":
   version: 4.0.1
