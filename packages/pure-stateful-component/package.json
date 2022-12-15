@@ -13,7 +13,8 @@
         "directory": "packages/pure-stateful-component"
     },
     "scripts": {
-        "compile": "tsc --build"
+        "compile": "tsc --build",
+        "prepack": "yarn compile"
     },
     "peerDependencies": {
         "react": "^18.0.0"

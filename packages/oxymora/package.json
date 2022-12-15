@@ -13,7 +13,8 @@
         "directory": "packages/oxymora"
     },
     "scripts": {
-        "compile": "tsc --build"
+        "compile": "tsc --build",
+        "prepack": "yarn compile"
     },
     "dependencies": {
         "pure-stateful-component": "^0.1.0"
