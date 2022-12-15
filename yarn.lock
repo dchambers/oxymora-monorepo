@@ -492,7 +492,6 @@ __metadata:
     "@emotion/core": ^11.0.0
     "@emotion/react": ^11.10.5
     "@oxymora/oxymora": ^0.1.1
-    "@swc/plugin-emotion": ^2.5.32
     "@types/react": ^18.0.26
     "@types/react-dom": ^18.0.9
     plugin-react-swc-emotion: ^3.0.1
@@ -611,13 +610,6 @@ __metadata:
   bin:
     swcx: run_swcx.js
   checksum: 5c6fa613502cbfae9985c7e97452649120e50e65695c8243111b422f6dddfebabdbc5ec94a9238e199e6a823a86906635e18e731f8ed45470bca8e4964d11659
-  languageName: node
-  linkType: hard
-
-"@swc/plugin-emotion@npm:^2.5.32":
-  version: 2.5.32
-  resolution: "@swc/plugin-emotion@npm:2.5.32"
-  checksum: 9518f0e62a893c38296b239a0bab0e2971317169bad481eec5911251237d4d99c70115f58b67756f557afc75173d1adfb1cb551e8dc68fb2d4f2931a90f178bc
   languageName: node
   linkType: hard
 
