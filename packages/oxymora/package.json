@@ -15,7 +15,7 @@
     "scripts": {
         "compile": "tsc --build",
         "prepack": "yarn compile",
-        "prepublish": "yarn workspace @oxymora/monorepo node scripts/publish-git-tag.sh packages/oxymora"
+        "prepublish": "../../scripts/publish-git-tag.sh packages/oxymora"
     },
     "dependencies": {
         "@oxymora/pure-stateful-component": "^0.1.1"

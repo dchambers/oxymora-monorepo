@@ -15,7 +15,7 @@
     "scripts": {
         "compile": "tsc --build",
         "prepack": "yarn compile",
-        "prepublish": "yarn workspace @oxymora/monorepo node scripts/publish-git-tag.sh packages/pure-stateful-component"
+        "prepublish": "../../scripts/publish-git-tag.sh packages/pure-stateful-component"
     },
     "peerDependencies": {
         "react": "^18.0.0"
