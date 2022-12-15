@@ -1,0 +1,6 @@
+releases:
+  "@oxymora/oxymora": patch
+  "@oxymora/pure-stateful-component": patch
+
+declined:
+  - "@oxymora/todomvc"

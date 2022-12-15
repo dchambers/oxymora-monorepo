@@ -1,0 +1,2 @@
+# we mostly rely on whitelisting by setting `files` to `dist`, but this one unneeded file gets through with that approach:
+tsconfig.tsbuildinfo
