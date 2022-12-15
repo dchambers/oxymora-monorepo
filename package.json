@@ -2,6 +2,7 @@
   "name": "@oxymora/monorepo",
   "packageManager": "yarn@3.3.0",
   "license": "MIT",
+  "private": true,
   "workspaces": [
     "packages/*"
   ],
@@ -10,7 +11,8 @@
     "generate:ci": "yarn generate && yarn catch-uncommitted",
     "compile": "tsc --build",
     "compile:clean": "tsc --build --clean",
-    "publish": "yarn workspaces foreach --parallel --verbose --topological-dev --no-private npm publish --tolerate-republish"
+    "release-version": "yarn version apply --all",
+    "publish": "yarn workspaces foreach --parallel --verbose --topological-dev --no-private npm publish --tolerate-republish --access public"
   },
   "devDependencies": {
     "@monorepo-utils/workspaces-to-typescript-project-references": "^2.9.0",
