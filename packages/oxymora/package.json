@@ -1,5 +1,5 @@
 {
-    "name": "oxymora",
+    "name": "@oxymora/oxymora",
     "version": "0.1.0",
     "license": "MIT",
     "main": "dist/src/oxymora.js",
@@ -17,7 +17,7 @@
         "prepack": "yarn compile"
     },
     "dependencies": {
-        "pure-stateful-component": "^0.1.0"
+        "@oxymora/pure-stateful-component": "^0.1.0"
     },
     "peerDependencies": {
         "react": "^18.0.0"

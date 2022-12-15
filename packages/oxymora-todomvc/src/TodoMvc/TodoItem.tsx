@@ -9,7 +9,7 @@ import {
   useRef,
 } from "react";
 import { css } from "@emotion/react";
-import { usePureStatefulCallback } from "oxymora";
+import { usePureStatefulCallback } from "@oxymora/oxymora";
 
 import {
   completedStyle,

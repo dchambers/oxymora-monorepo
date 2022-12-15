@@ -11,7 +11,7 @@
     "compile": "tsc --build",
     "compile:clean": "tsc --build --clean",
     "publish": "yarn workspaces foreach --parallel --verbose --topological-dev --no-private npm publish --tolerate-republish"
-  }, 
+  },
   "devDependencies": {
     "@monorepo-utils/workspaces-to-typescript-project-references": "^2.9.0",
     "@types/node": "^18.11.14",

@@ -1,5 +1,5 @@
 import type { SyntheticEvent } from "react";
-import type { PureStatefulComponentProps } from "pure-stateful-component";
+import type { PureStatefulComponentProps } from "@oxymora/pure-stateful-component";
 
 import { createContext, useContext } from "react";
 
@@ -83,4 +83,4 @@ export const usePureStatefulCallback = <
   return wrappingEventHandler;
 };
 
-export { default as makeStateful } from "pure-stateful-component";
+export { default as makeStateful } from "@oxymora/pure-stateful-component";
