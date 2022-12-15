@@ -19,5 +19,6 @@
     "jsxImportSource": "@emotion/react"
   },
   "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  // NOTE: not needed for running `dev`
+  // "references": [{ "path": "./tsconfig.node.json" }]
 }
