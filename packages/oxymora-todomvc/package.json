@@ -11,11 +11,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@chakra-ui/react": "^2.4.3",
     "@emotion/core": "^11.0.0",
     "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
     "@oxymora/oxymora": "^0.1.1",
+    "framer-motion": "^7.10.2",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-icons": "^4.7.1",
+    "react-markdown": "^8.0.4",
+    "react-router-dom": "^6.5.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.26",

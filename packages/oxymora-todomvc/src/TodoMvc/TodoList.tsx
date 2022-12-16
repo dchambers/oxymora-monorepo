@@ -17,25 +17,29 @@ import {
   toggleAllStyle,
 } from "./styles";
 import {
-  ListMode,
-  addTodoItem,
-  getActiveTodoItems,
-  updateTodoItems,
+  ViewMode,
+  addTodoListItem,
+  getActiveTodoListItems,
+  updateTodoListItems,
   updateTodoList,
 } from "./data-model";
-import TodoItem from "./TodoItem";
+import TodoListItem from "./TodoListItem";
 import TodoListFooter from "./TodoListFooter";
 
 export type TodoListStateSpec = {
   State: Todos;
-  InputProps: {};
-  OutputProps: {};
+  InputProps: {
+    viewMode?: ViewMode;
+  };
+  OutputProps: {
+    onViewModeChange: ViewMode;
+  };
 };
 
 type TodoListProps = Props<TodoListStateSpec>;
 
-const defaultTodoList = {
-  listMode: ListMode.All,
+export const defaultTodoList = {
+  viewMode: ViewMode.All,
   toggleAllChecked: false,
   newTodo: "",
   todoItems: [],
@@ -43,9 +47,13 @@ const defaultTodoList = {
 
 export const PureStatefulTodoList = pureStatefulComponent<TodoListStateSpec>(
   defaultTodoList,
-  ({ state: todoList }: TodoListProps) => {
-    const activeTodoItems = getActiveTodoItems(
-      todoList.listMode,
+  ({ state, viewMode }: TodoListProps) => {
+    const todoList = {
+      ...state,
+      viewMode: viewMode || state.viewMode,
+    };
+    const activeTodoItems = getActiveTodoListItems(
+      todoList.viewMode,
       todoList.todoItems
     );
 
@@ -64,7 +72,7 @@ export const PureStatefulTodoList = pureStatefulComponent<TodoListStateSpec>(
         event.key !== "Enter"
           ? state
           : updateTodoList(
-              addTodoItem(state, {
+              addTodoListItem(state, {
                 id: `${state.newTodo}@${Date.now()}`,
                 description: state.newTodo,
                 completed: false,
@@ -79,7 +87,7 @@ export const PureStatefulTodoList = pureStatefulComponent<TodoListStateSpec>(
       ChangeEventHandler<HTMLInputElement>
     >((_event, { state }) => ({
       state: updateTodoList(
-        updateTodoItems(state, { completed: !state.toggleAllChecked }),
+        updateTodoListItems(state, { completed: !state.toggleAllChecked }),
         { toggleAllChecked: !state.toggleAllChecked }
       ),
     }));
@@ -89,7 +97,7 @@ export const PureStatefulTodoList = pureStatefulComponent<TodoListStateSpec>(
         <section css={mainStyle}>
           <ul css={todoListStyle}>
             {activeTodoItems.map((todoItem) => (
-              <TodoItem
+              <TodoListItem
                 key={todoItem.id}
                 id={todoItem.id}
                 description={todoItem.description}
@@ -101,13 +109,13 @@ export const PureStatefulTodoList = pureStatefulComponent<TodoListStateSpec>(
         </section>
         <TodoListFooter
           todoItems={todoList.todoItems}
-          listMode={todoList.listMode}
+          viewMode={todoList.viewMode}
         />
       </>
     );
 
     return (
-      <>
+      <div>
         <section css={todoAppStyle}>
           <header>
             <h1>todos</h1>
@@ -136,7 +144,7 @@ export const PureStatefulTodoList = pureStatefulComponent<TodoListStateSpec>(
         <footer css={infoStyle}>
           <p>Double-click to edit a todo</p>
         </footer>
-      </>
+      </div>
     );
   }
 );
