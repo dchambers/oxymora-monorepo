@@ -1,6 +1,6 @@
 {
     "name": "@oxymora/pure-stateful-component",
-    "version": "0.1.1",
+    "version": "0.2.0",
     "license": "MIT",
     "main": "dist/src/pure-stateful-component.js",
     "files": [
