@@ -10,29 +10,31 @@ import {
   selectedStyle,
   todoCountStyle,
 } from "./styles";
-import { ListMode, updateTodoList } from "./data-model";
+import { ViewMode, updateTodoList } from "./data-model";
 import { TodoListStateSpec } from "./TodoList";
 
 type TodoListFooterProps = {
-  listMode: ListMode;
+  viewMode: ViewMode;
   todoItems: Todo[];
 };
 
-const TodoListFooter = ({ todoItems, listMode }: TodoListFooterProps) => {
+const TodoListFooter = ({ todoItems, viewMode }: TodoListFooterProps) => {
   const remainingTodos = todoItems.filter(
     (todoItem: Todo) => todoItem.completed === false
   );
 
-  const changeListModeHandler = usePureStatefulCallback<
+  const changeViewModeHandler = usePureStatefulCallback<
     TodoListStateSpec,
     MouseEventHandler<HTMLSpanElement>
   >((event, { state }) => {
     const dataAttributes = (event.target as HTMLSpanElement).dataset;
+    const viewMode = dataAttributes.viewMode as ViewMode;
 
     return {
       state: updateTodoList(state, {
-        listMode: dataAttributes.listMode as ListMode,
+        viewMode,
       }),
+      onViewModeChange: viewMode,
     };
   });
 
@@ -56,27 +58,27 @@ const TodoListFooter = ({ todoItems, listMode }: TodoListFooterProps) => {
       <ul css={filtersStyle}>
         <li>
           <span
-            css={listMode === ListMode.All ? selectedStyle : undefined}
-            data-list-mode={ListMode.All}
-            onClick={changeListModeHandler}
+            css={viewMode === ViewMode.All ? selectedStyle : undefined}
+            data-view-mode={ViewMode.All}
+            onClick={changeViewModeHandler}
           >
             All
           </span>
         </li>
         <li>
           <span
-            css={listMode === ListMode.Active ? selectedStyle : undefined}
-            data-list-mode={ListMode.Active}
-            onClick={changeListModeHandler}
+            css={viewMode === ViewMode.Active ? selectedStyle : undefined}
+            data-view-mode={ViewMode.Active}
+            onClick={changeViewModeHandler}
           >
             Active
           </span>
         </li>
         <li>
           <span
-            css={listMode === ListMode.Completed ? selectedStyle : undefined}
-            data-list-mode={ListMode.Completed}
-            onClick={changeListModeHandler}
+            css={viewMode === ViewMode.Completed ? selectedStyle : undefined}
+            data-view-mode={ViewMode.Completed}
+            onClick={changeViewModeHandler}
           >
             Completed
           </span>
