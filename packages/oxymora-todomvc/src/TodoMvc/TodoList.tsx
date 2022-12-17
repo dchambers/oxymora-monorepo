@@ -47,7 +47,7 @@ export const defaultTodoList = {
 
 export const PureStatefulTodoList = pureStatefulComponent<TodoListStateSpec>(
   defaultTodoList,
-  ({ state, viewMode }: TodoListProps) => {
+  ({ state, viewMode }) => {
     const todoList = {
       ...state,
       viewMode: viewMode || state.viewMode,

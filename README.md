@@ -1,46 +1,117 @@
 # Oxymora
 
+Making React components 100% pure.
+
 > oxymoron
 > ŏk″sē-môr′ŏn″
 >
 > noun
 > A rhetorical figure in which incongruous or contradictory terms are combined, as in a 'deafening silence' and a 'mournful optimist'.
 
-Oxymora is the plural of oxymoron, and this library has that name since it has functions with names like `pureStatefulComponent` and `usePureStatefulCallback`, even though ["pure stateful"](./docs/PURE_STATEFUL_COMPONENTS.md) is an oxymoron.
+Oxymora is the plural of oxymoron, and this library has that name since it has functions named `pureStatefulComponent` and `usePureStatefulCallback`, yet ["pure stateful"](./docs/PURE_STATEFUL_COMPONENTS.md) is an oxymoron.
 
 ## Why Use Oxymora?
 
 Oxymora components are:
 
-1. Quick to write.
-2. Easy to debug.
+1. Quick to write:
+   - Components are written declaritively.
+   - No callback prop-drilling.
+2. Easy to reason about / debug.
+   - Trivial component mental model.
+   - Both view functions and event handler functions are 100% pure.
 3. Simple to test.
+   - Pure components so mocking isn't required.
 4. Always composable.
-5. Robust.
+   - Unlike stateful components, pure components always compose.
+5. Faster to test.
+   - Instantly jump components to prior UI discovered states.
+6. Robust.
+   - Less state equals fewer bugs.
 
-## How Is This Achieved?
+## The Anatomy of an Oxymora Component
 
-TODO: gain clarity on how this section relates to the section above, and update accordingly.
+Oxymora components start with a TypeScript _state-spec_; this defines the component's _state_, _input-props_ and _output-props_. Here's an example of a _state-spec_ for a `Counter` component:
 
-- Components are written declaritively:
-  - Both view functions and event handler functions are 100% pure functions.
-- All components are composable:
-  - Stateful components remain pure such that the state never hinders composition, and components can always be re-used in novel ways.
-- Minimal boilerplate:
-  - This isn't Redux.
-- Reduced prop drilling:
-  - Nested components can directly perform state updates and call-backs for the pure-stateful component ensemble of which they are a part of.
-- Pure-stateful component ensembles are designed to be tested in isolation:
-  - Use `react-testing-library` as you normally would, but with the optional super-powers of being able to jump to known states, or to test outcomes via the data model.
+```ts
+type CounterStateSpec = {
+  State: number;
+  InputProps: {
+    incrementBy?: number;
+  };
+  OutputProps: {
+    onCounterChange: number;
+  };
+};
+```
 
-## Show Me The Code
+The props for this component are defined like this:
 
-TODO: Show a simple counter example, and provide a link to a docs page where we go into more detail on the anatomy of Oxymora components (e.g. state specs, input props, output props, etc)
+```ts
+type CounterProps = Props<CounterStateSpec>;
+```
 
-## Try Oxymora Out!
+This is equivalent to manually writing the following:
 
-TODO: Provide a StackBlitz link for the counter example too.
+```ts
+// NOTE: you don't need to write this because this is what Props<CounterStateSpec> gives you:
+type CounterProps = {
+  // `InputProps`:
+  incrementBy?: number;
+  // `OutputProps`:
+  onCounterChange?: (number) => void;
+  // `State`:
+  state: number;
+  onStateChange?: (number) => void;
+};
+```
 
-See what the Todo MVC app looks like when implemented in Oxymora:
+Although the `State` related props are part of the pure-stateful component, they will be removed from the stateful component that's subsequently created using `makeStateful`. Having the pure-stateful component available to us is helpful for testing however, plus it can also be useful when composition isn't possible using the stateful component.
+
+Here's how you might implement `PureStatefulCounter`:
+
+```ts
+export const PureStatefulCounter = pureStatefulComponent<CounterStateSpec>(
+  1, // initial state
+  ({ state }) => {
+    const onIncrementCounter = usePureStatefulCallback<
+      CounterStateSpec,
+      MouseEventHandler<HTMLButtonElement>
+    >((_event, { state, incrementBy = 1 }) => {
+      const newState = state + incrementBy;
+
+      return {
+        state: newState,
+        onCounterChange: newState,
+      };
+    });
+
+    return (
+      <Button
+        colorScheme="orange"
+        leftIcon={<GrFormAdd />}
+        onClick={onIncrementCounter}
+      >
+        {state}
+      </Button>
+    );
+  }
+);
+```
+
+Notice the declarative nature of the `onIncrementCounter` event handler; it signals both a state update and a callback declaratively. Event handlers act on behalf of the closest pure-stateful ancestor component, so this event handler would continue to work even if it was moved into a child component (no callback prop-drilling required).
+
+Finally, the stateful version of the component (i.e. not having `state` and `onStateChange` props) can be created like this:
+
+```ts
+export const StatefulCounter = makeStateful<
+  CounterStateSpec["State"],
+  CounterProps
+>(PureStatefulCounter);
+```
+
+## Try a Demo!
+
+We have a live StackBlitz development environment that includes the simple `Counter` example above, but which also includes an Oxymora implementation of [TodoMVC](https://todomvc.com/). Use this to play with the components, inspect the code, and test code changes live.
 
 [![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/dchambers/oxymora-monorepo/tree/master/examples/todomvc?terminal=dev&title=Oxyymora%20Todo%20MVC%20Example)
