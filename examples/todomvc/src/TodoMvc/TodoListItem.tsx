@@ -21,11 +21,11 @@ import {
   notEditingStyle,
   toggleStyle,
 } from "./styles";
-import { removeTodoItem, updateTodoItem } from "./data-model";
+import { removeTodoListItem, updateTodoListItem } from "./data-model";
 
 type TodoItemProps = Todo;
 
-const TodoItem = (props: TodoItemProps) => {
+const TodoListItem = (props: TodoItemProps) => {
   const { id, description, completed, renameInProgress } = props;
   const inputReference = useRef(null as HTMLInputElement | null);
 
@@ -37,35 +37,35 @@ const TodoItem = (props: TodoItemProps) => {
     TodoListStateSpec,
     ChangeEventHandler<HTMLInputElement>
   >((_event, { state }) => ({
-    state: updateTodoItem(state, { id, completed: !completed }),
+    state: updateTodoListItem(state, { id, completed: !completed }),
   }));
 
   const onRemoveTodoItemClick = usePureStatefulCallback<
     TodoListStateSpec,
     MouseEventHandler<HTMLButtonElement>
   >((_event, { state }) => ({
-    state: removeTodoItem(state, id),
+    state: removeTodoListItem(state, id),
   }));
 
   const onTodoItemDoubleClick = usePureStatefulCallback<
     TodoListStateSpec,
     MouseEventHandler<HTMLLIElement>
   >((_event, { state }) => ({
-    state: updateTodoItem(state, { id, renameInProgress: true }),
+    state: updateTodoListItem(state, { id, renameInProgress: true }),
   }));
 
   const onRenamedTodoItemChange = usePureStatefulCallback<
     TodoListStateSpec,
     ChangeEventHandler<HTMLInputElement>
   >((event, { state }) => ({
-    state: updateTodoItem(state, { id, description: event.target.value }),
+    state: updateTodoListItem(state, { id, description: event.target.value }),
   }));
 
   const onRenamedTodoItemBlur = usePureStatefulCallback<
     TodoListStateSpec,
     FocusEventHandler<HTMLInputElement>
   >((_event, { state }) => ({
-    state: updateTodoItem(state, { id, renameInProgress: false }),
+    state: updateTodoListItem(state, { id, renameInProgress: false }),
   }));
 
   return (
@@ -107,4 +107,4 @@ const TodoItem = (props: TodoItemProps) => {
   );
 };
 
-export default TodoItem;
+export default TodoListItem;
