@@ -26,7 +26,7 @@ const TodoListFooter = ({ todoItems, viewMode }: TodoListFooterProps) => {
   const changeViewModeHandler = usePureStatefulCallback<
     TodoListStateSpec,
     MouseEventHandler<HTMLSpanElement>
-  >((event, { state }) => {
+  >(({ state }, event) => {
     const dataAttributes = (event.target as HTMLSpanElement).dataset;
     const viewMode = dataAttributes.viewMode as ViewMode;
 
@@ -38,16 +38,15 @@ const TodoListFooter = ({ todoItems, viewMode }: TodoListFooterProps) => {
     };
   });
 
-  const clearCompletedHandler = usePureStatefulCallback<
-    TodoListStateSpec,
-    MouseEventHandler<HTMLButtonElement>
-  >((_event, { state }) => ({
-    state: updateTodoList(state, {
-      todoItems: state.todoItems.filter(
-        (todoItem) => todoItem.completed === false
-      ),
-    }),
-  }));
+  const clearCompletedHandler = usePureStatefulCallback<TodoListStateSpec>(
+    ({ state }) => ({
+      state: updateTodoList(state, {
+        todoItems: state.todoItems.filter(
+          (todoItem) => todoItem.completed === false
+        ),
+      }),
+    })
+  );
 
   return (
     <footer css={footerStyle}>
