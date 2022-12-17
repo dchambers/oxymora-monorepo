@@ -60,14 +60,14 @@ export const PureStatefulTodoList = pureStatefulComponent<TodoListStateSpec>(
     const onNewTodoItemChange = usePureStatefulCallback<
       TodoListStateSpec,
       ChangeEventHandler<HTMLInputElement>
-    >((event, { state }) => ({
+    >(({ state }, event) => ({
       state: updateTodoList(state, { newTodo: event.target.value }),
     }));
 
     const onNewTodoItemKeyDown = usePureStatefulCallback<
       TodoListStateSpec,
       KeyboardEventHandler<HTMLInputElement>
-    >((event, { state }) => ({
+    >(({ state }, event) => ({
       state:
         event.key !== "Enter"
           ? state
@@ -82,15 +82,14 @@ export const PureStatefulTodoList = pureStatefulComponent<TodoListStateSpec>(
             ),
     }));
 
-    const onToggleAllChange = usePureStatefulCallback<
-      TodoListStateSpec,
-      ChangeEventHandler<HTMLInputElement>
-    >((_event, { state }) => ({
-      state: updateTodoList(
-        updateTodoListItems(state, { completed: !state.toggleAllChecked }),
-        { toggleAllChecked: !state.toggleAllChecked }
-      ),
-    }));
+    const onToggleAllChange = usePureStatefulCallback<TodoListStateSpec>(
+      ({ state }) => ({
+        state: updateTodoList(
+          updateTodoListItems(state, { completed: !state.toggleAllChecked }),
+          { toggleAllChecked: !state.toggleAllChecked }
+        ),
+      })
+    );
 
     const listSections = (
       <>
@@ -149,7 +148,5 @@ export const PureStatefulTodoList = pureStatefulComponent<TodoListStateSpec>(
   }
 );
 
-export const StatefulTodoList = makeStateful<
-  TodoListStateSpec["State"],
-  TodoListProps
->(PureStatefulTodoList);
+export const StatefulTodoList =
+  makeStateful<TodoListStateSpec>(PureStatefulTodoList);

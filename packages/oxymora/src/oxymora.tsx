@@ -1,5 +1,6 @@
 import type { SyntheticEvent } from "react";
 import type { PureStatefulComponentProps } from "@oxymora/pure-stateful-component";
+import genericMakeStateful from "@oxymora/pure-stateful-component";
 
 import { createContext, useContext } from "react";
 
@@ -53,16 +54,16 @@ export const pureStatefulComponent =
 
 export const usePureStatefulCallback = <
   SS extends StateSpec,
-  EH extends React.EventHandler<SyntheticEvent>
+  EH extends React.EventHandler<SyntheticEvent> = React.EventHandler<SyntheticEvent>
 >(
   eventHandler: (
-    event: Parameters<EH>[0],
-    props: InputProps<SS>
+    props: InputProps<SS>,
+    event: Parameters<EH>[0]
   ) => Exact<OutputProps<SS>>
 ): EH => {
   const componentContext = useContext(ComponentContext);
   const wrappingEventHandler = ((event) => {
-    const result = eventHandler(event, componentContext);
+    const result = eventHandler(componentContext, event);
 
     if (result.state) {
       componentContext.onStateChange(result.state);
@@ -86,4 +87,6 @@ export const usePureStatefulCallback = <
   return wrappingEventHandler;
 };
 
-export { default as makeStateful } from "@oxymora/pure-stateful-component";
+export const makeStateful = <SS extends StateSpec>(
+  component: (props: Props<SS>) => JSX.Element
+) => genericMakeStateful<SS["State"], Props<SS>>(component);
