@@ -33,40 +33,36 @@ const TodoListItem = (props: TodoItemProps) => {
     inputReference.current?.focus();
   }, [renameInProgress]);
 
-  const onTodoItemCompletedChange = usePureStatefulCallback<
-    TodoListStateSpec,
-    ChangeEventHandler<HTMLInputElement>
-  >((_event, { state }) => ({
-    state: updateTodoListItem(state, { id, completed: !completed }),
-  }));
+  const onTodoItemCompletedChange = usePureStatefulCallback<TodoListStateSpec>(
+    ({ state }) => ({
+      state: updateTodoListItem(state, { id, completed: !completed }),
+    })
+  );
 
-  const onRemoveTodoItemClick = usePureStatefulCallback<
-    TodoListStateSpec,
-    MouseEventHandler<HTMLButtonElement>
-  >((_event, { state }) => ({
-    state: removeTodoListItem(state, id),
-  }));
+  const onRemoveTodoItemClick = usePureStatefulCallback<TodoListStateSpec>(
+    ({ state }) => ({
+      state: removeTodoListItem(state, id),
+    })
+  );
 
-  const onTodoItemDoubleClick = usePureStatefulCallback<
-    TodoListStateSpec,
-    MouseEventHandler<HTMLLIElement>
-  >((_event, { state }) => ({
-    state: updateTodoListItem(state, { id, renameInProgress: true }),
-  }));
+  const onTodoItemDoubleClick = usePureStatefulCallback<TodoListStateSpec>(
+    ({ state }) => ({
+      state: updateTodoListItem(state, { id, renameInProgress: true }),
+    })
+  );
 
   const onRenamedTodoItemChange = usePureStatefulCallback<
     TodoListStateSpec,
     ChangeEventHandler<HTMLInputElement>
-  >((event, { state }) => ({
+  >(({ state }, event) => ({
     state: updateTodoListItem(state, { id, description: event.target.value }),
   }));
 
-  const onRenamedTodoItemBlur = usePureStatefulCallback<
-    TodoListStateSpec,
-    FocusEventHandler<HTMLInputElement>
-  >((_event, { state }) => ({
-    state: updateTodoListItem(state, { id, renameInProgress: false }),
-  }));
+  const onRenamedTodoItemBlur = usePureStatefulCallback<TodoListStateSpec>(
+    ({ state }) => ({
+      state: updateTodoListItem(state, { id, renameInProgress: false }),
+    })
+  );
 
   return (
     <li
