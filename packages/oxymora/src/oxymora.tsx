@@ -3,19 +3,21 @@ import type { PureStatefulComponentProps } from "@oxymora/pure-stateful-componen
 
 import { createContext, useContext } from "react";
 
-type StateSpec = {
+export type StateSpec = {
   State: unknown;
   InputProps: Object;
   OutputProps: Object;
 };
 
-type InputProps<SS extends StateSpec> = {
+export type InputProps<SS extends StateSpec> = {
   state: SS["State"];
 } & SS["InputProps"];
 
-type OutputProps<SS extends StateSpec> = {
-  state: SS["State"];
-} & SS["OutputProps"];
+export type OutputProps<SS extends StateSpec> = Partial<
+  {
+    state: SS["State"];
+  } & SS["OutputProps"]
+>;
 
 export type Props<SS extends StateSpec> = PureStatefulComponentProps<
   SS["State"]
@@ -62,8 +64,9 @@ export const usePureStatefulCallback = <
   const wrappingEventHandler = ((event) => {
     const result = eventHandler(event, componentContext);
 
-    // TODO: allow `state` not to be returned
-    componentContext.onStateChange(result.state);
+    if (result.state) {
+      componentContext.onStateChange(result.state);
+    }
 
     const resultKeys = Object.keys(result) as Array<keyof typeof result>;
 

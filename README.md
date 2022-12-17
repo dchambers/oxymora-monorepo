@@ -20,6 +20,8 @@ Oxymora components are:
 
 ## How Is This Achieved?
 
+TODO: gain clarity on how this section relates to the section above, and update accordingly.
+
 - Components are written declaritively:
   - Both view functions and event handler functions are 100% pure functions.
 - All components are composable:
@@ -31,7 +33,13 @@ Oxymora components are:
 - Pure-stateful component ensembles are designed to be tested in isolation:
   - Use `react-testing-library` as you normally would, but with the optional super-powers of being able to jump to known states, or to test outcomes via the data model.
 
+## Show Me The Code
+
+TODO: Show a simple counter example, and provide a link to a docs page where we go into more detail on the anatomy of Oxymora components (e.g. state specs, input props, output props, etc)
+
 ## Try Oxymora Out!
+
+TODO: Provide a StackBlitz link for the counter example too.
 
 See what the Todo MVC app looks like when implemented in Oxymora:
 

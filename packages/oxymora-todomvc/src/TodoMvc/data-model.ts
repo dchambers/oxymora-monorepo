@@ -1,14 +1,14 @@
 export type Todos = {
-  listMode: ListMode;
+  viewMode: ViewMode;
   toggleAllChecked: boolean;
   newTodo: string;
   todoItems: Todo[];
 };
 
-export enum ListMode {
-  All = "ALL_ITEMS",
-  Active = "ACTIVE_ITEMS",
-  Completed = "COMPLETED_ITEMS",
+export enum ViewMode {
+  All = "all",
+  Active = "active",
+  Completed = "completed",
 }
 
 export type Todo = {
@@ -25,11 +25,11 @@ type UpdatedTodo = Pick<Todo, "id"> & Partial<Todo>;
 const isActiveItem = (todoItem: Todo) => !todoItem.completed;
 const isCompletedItem = (todoItem: Todo) => todoItem.completed;
 
-export const getActiveTodoItems = (listMode: ListMode, todoItems: Todo[]) =>
-  listMode === ListMode.All
+export const getActiveTodoListItems = (viewMode: ViewMode, todoItems: Todo[]) =>
+  viewMode === ViewMode.All
     ? todoItems
     : todoItems.filter(
-        listMode === ListMode.Active ? isActiveItem : isCompletedItem
+        viewMode === ViewMode.Active ? isActiveItem : isCompletedItem
       );
 
 export const updateTodoList = (todos: Todos, update: UpdatedTodos): Todos => ({
@@ -37,24 +37,27 @@ export const updateTodoList = (todos: Todos, update: UpdatedTodos): Todos => ({
   ...update,
 });
 
-export const updateTodoItems = (todos: Todos, update: TodoUpdate): Todos => ({
+export const updateTodoListItems = (
+  todos: Todos,
+  update: TodoUpdate
+): Todos => ({
   ...todos,
   todoItems: todos.todoItems.map((todoItem) => ({ ...todoItem, ...update })),
 });
 
-export const addTodoItem = (todos: Todos, item: Todo): Todos => ({
+export const addTodoListItem = (todos: Todos, item: Todo): Todos => ({
   ...todos,
   todoItems: [...todos.todoItems, item],
 });
 
-export const updateTodoItem = (todos: Todos, item: UpdatedTodo): Todos => ({
+export const updateTodoListItem = (todos: Todos, item: UpdatedTodo): Todos => ({
   ...todos,
   todoItems: todos.todoItems.map((todoItem) =>
     todoItem.id === item.id ? { ...todoItem, ...item } : todoItem
   ),
 });
 
-export const removeTodoItem = (todos: Todos, id: Todo["id"]): Todos => ({
+export const removeTodoListItem = (todos: Todos, id: Todo["id"]): Todos => ({
   ...todos,
   todoItems: todos.todoItems.filter((todoItem) => todoItem.id !== id),
 });

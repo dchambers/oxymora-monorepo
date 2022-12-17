@@ -7,8 +7,10 @@
     "packages/*"
   ],
   "scripts": {
-    "generate": "yarn workspaces-to-typescript-project-references && yarn dedupe && cp -a packages/oxymora-todomvc/src examples/todomvc",
+    "dev": "yarn packages/oxymora-todomvc dev",
+    "generate": "yarn workspaces-to-typescript-project-references && yarn dedupe",
     "generate:ci": "yarn generate && yarn catch-uncommitted",
+    "generate:examples": "rm -rf examples/todomvc/src && cp -a packages/oxymora-todomvc/src examples/todomvc",
     "compile": "tsc --build",
     "compile:clean": "tsc --build --clean",
     "release-version": "yarn version apply --all",

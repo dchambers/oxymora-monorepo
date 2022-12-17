@@ -1,6 +1,9 @@
 import { css } from "@emotion/react";
 
 export const todoAppStyle = css`
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 300;
   background: #fff;
   margin: 130px 0 40px 0;
   position: relative;
@@ -194,7 +197,7 @@ export const destroyStyle = css`
 export const footerStyle = css`
   color: #777;
   padding: 10px 15px;
-  height: 20px;
+  height: 44px;
   text-align: center;
   border-top: 1px solid #e6e6e6;
 
