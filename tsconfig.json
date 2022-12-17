@@ -1,15 +1,24 @@
 {
     "extends": "./tsconfig-base.json",
+    "include": [
+      "no-such-src"
+    ],
     "compilerOptions": {
       "noEmit": true,
       "jsxImportSource": "@emotion/react" // TODO: understand why we need this as it really shouldn't be needed
     },
     "references": [
       {
+        "path": "./examples/todomvc"
+      },
+      {
         "path": "./packages/oxymora"
       },
       {
         "path": "./packages/pure-stateful-component"
+      },
+      {
+        "path": "./packages/oxymora-todomvc"
       }
     ]
 }
