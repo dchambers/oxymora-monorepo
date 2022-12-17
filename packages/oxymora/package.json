@@ -1,6 +1,6 @@
 {
     "name": "@oxymora/oxymora",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "license": "MIT",
     "main": "dist/src/oxymora.js",
     "files": [
