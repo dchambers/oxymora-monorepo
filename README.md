@@ -74,17 +74,16 @@ Here's how you might implement `PureStatefulCounter`:
 export const PureStatefulCounter = pureStatefulComponent<CounterStateSpec>(
   1, // initial state
   ({ state }) => {
-    const onIncrementCounter = usePureStatefulCallback<
-      CounterStateSpec,
-      MouseEventHandler<HTMLButtonElement>
-    >((_event, { state, incrementBy = 1 }) => {
-      const newState = state + incrementBy;
+    const onIncrementCounter = usePureStatefulCallback<CounterStateSpec>(
+      ({ state, incrementBy = 1 }) => {
+        const newState = state + incrementBy;
 
-      return {
-        state: newState,
-        onCounterChange: newState,
-      };
-    });
+        return {
+          state: newState,
+          onCounterChange: newState,
+        };
+      }
+    );
 
     return (
       <Button
@@ -104,10 +103,8 @@ Notice the declarative nature of the `onIncrementCounter` event handler; it sign
 Finally, the stateful version of the component (i.e. not having `state` and `onStateChange` props) can be created like this:
 
 ```ts
-export const StatefulCounter = makeStateful<
-  CounterStateSpec["State"],
-  CounterProps
->(PureStatefulCounter);
+export const StatefulCounter =
+  makeStateful<CounterStateSpec>(PureStatefulCounter);
 ```
 
 ## Try a Demo!

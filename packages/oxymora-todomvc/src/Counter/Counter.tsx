@@ -24,17 +24,16 @@ export type CounterProps = Props<CounterStateSpec>;
 export const PureStatefulCounter = pureStatefulComponent<CounterStateSpec>(
   1, // initial state
   ({ state }) => {
-    const onIncrementCounter = usePureStatefulCallback<
-      CounterStateSpec,
-      MouseEventHandler<HTMLButtonElement>
-    >((_event, { state, incrementBy = 1 }) => {
-      const newState = state + incrementBy;
+    const onIncrementCounter = usePureStatefulCallback<CounterStateSpec>(
+      ({ state, incrementBy = 1 }) => {
+        const newState = state + incrementBy;
 
-      return {
-        state: newState,
-        onCounterChange: newState,
-      };
-    });
+        return {
+          state: newState,
+          onCounterChange: newState,
+        };
+      }
+    );
 
     return (
       <Button
@@ -48,7 +47,5 @@ export const PureStatefulCounter = pureStatefulComponent<CounterStateSpec>(
   }
 );
 
-export const StatefulCounter = makeStateful<
-  CounterStateSpec["State"],
-  CounterProps
->(PureStatefulCounter);
+export const StatefulCounter =
+  makeStateful<CounterStateSpec>(PureStatefulCounter);
