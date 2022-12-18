@@ -1,0 +1,17 @@
+name: Versioning
+on:
+  pull_request:
+    branches-ignore:
+      - release/*
+
+jobs:
+  version-check:
+    name: yarn version check
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - run: yarn install --immutable --immutable-cache
+      - run: yarn version check
