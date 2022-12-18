@@ -9,6 +9,8 @@ import {
   useColorModeValue,
   Link,
   Text,
+  Alert,
+  AlertIcon,
 } from "@chakra-ui/react";
 import { ReactText } from "react";
 
@@ -25,29 +27,37 @@ type LinkItem = {
 };
 
 const Sidebar = ({ title, linkItems, children }: SidebarProps) => (
-  <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
-    <Box
-      bg={useColorModeValue("white", "gray.900")}
-      borderRight="1px"
-      borderRightColor={useColorModeValue("gray.200", "gray.700")}
-      w={{ base: "full", md: 60 }}
-      pos="fixed"
-      h="full"
-      display={{ base: "none", md: "block" }}
-    >
-      <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-          {title}
-        </Text>
-      </Flex>
-      {linkItems.map((link) => (
-        <NavItem key={link.name} path={link.path} icon={link.icon}>
-          {link.name}
-        </NavItem>
-      ))}
+  <>
+    <Box display={{ base: "block", lg: "none" }}>
+      <Alert status="info">
+        <AlertIcon />
+        Increase window width to make navigation visible.
+      </Alert>
     </Box>
-    <Box ml={{ base: 0, md: 60 }}>{children}</Box>
-  </Box>
+    <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
+      <Box
+        bg={useColorModeValue("white", "gray.900")}
+        borderRight="1px"
+        borderRightColor={useColorModeValue("gray.200", "gray.700")}
+        w={{ base: "full", lg: 180 }}
+        pos="fixed"
+        h="full"
+        display={{ base: "none", lg: "block" }}
+      >
+        <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
+          <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
+            {title}
+          </Text>
+        </Flex>
+        {linkItems.map((link) => (
+          <NavItem key={link.name} path={link.path} icon={link.icon}>
+            {link.name}
+          </NavItem>
+        ))}
+      </Box>
+      <Box ml={{ base: 0, lg: 180 }}>{children}</Box>
+    </Box>
+  </>
 );
 
 type NavItemProps = {
