@@ -13,7 +13,7 @@
     "generate:examples": "rm -rf examples/todomvc/src && cp -a packages/oxymora-todomvc/src examples/todomvc && (cd examples/todomvc; npm install) && yarn compile",
     "compile": "tsc --build",
     "compile:clean": "tsc --build --clean",
-    "release-version": "yarn version apply --all",
+    "release-version": "yarn version apply --all && git add -A",
     "publish": "yarn workspaces foreach --parallel --verbose --topological-dev --no-private npm publish --tolerate-republish --access public"
   },
   "devDependencies": {
