@@ -1,0 +1,3 @@
+releases:
+  "@oxymora/oxymora": patch
+  "@oxymora/todomvc": patch

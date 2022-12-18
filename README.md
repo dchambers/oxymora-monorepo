@@ -109,6 +109,6 @@ export const StatefulCounter =
 
 ## Try a Demo!
 
-We have a live StackBlitz development environment that includes the simple `Counter` example above, but which also includes an Oxymora implementation of [TodoMVC](https://todomvc.com/). Use this to play with the components, inspect the code, and test code changes live.
+We have a live StackBlitz development environment that includes the simple `Counter` example above, but also an Oxymora implementation of [TodoMVC](https://todomvc.com/). Use this to play with the components, inspect the code, and test code changes live.
 
 [![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/dchambers/oxymora-monorepo/tree/master/examples/todomvc?terminal=dev&title=Oxyymora%20Todo%20MVC%20Example)
