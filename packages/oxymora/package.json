@@ -6,7 +6,7 @@
     "files": [
         "dist"
     ],
-    "homepage": "https://github.com/dchambers/oxymora-monorepo",
+    "homepage": "https://github.com/dchambers/oxymora-monorepo/tree/master/packages/oxymora",
     "repository": {
         "type": "git",
         "url": "https://github.com/dchambers/oxymora-monorepo.git",
