@@ -27,7 +27,7 @@ Oxymora components are:
    - [Unlike stateful components, pure components always compose](./docs/OXYMORA_COMPONENTS_ARE.md#always-composable).
 5. Quicker to feedback on broken functionality.
    - [Ability to jump components to prior UI discovered states to speed up view tests](./docs/OXYMORA_COMPONENTS_ARE.md#faster-to-feedback-by-reducing-clicking).
-   - [Option to have even faster tests if testing via a view-model](./docs/OXYMORA_COMPONENTS_ARE.md#faster-to-feedback-by-almost-eliminating-clicking)
+   - [Option to have even faster tests if testing via a view-model](./docs/OXYMORA_COMPONENTS_ARE.md#faster-to-feedback-by-eliminating-clicking)
 6. Robust.
    - [Less state equals fewer bugs](./docs/OXYMORA_COMPONENTS_ARE.md#more-robust).
 
