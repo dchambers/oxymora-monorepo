@@ -1,7 +1,6 @@
-import { Box, SimpleGrid } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import ReactMarkdown from "react-markdown";
 
-import { ViewMode } from "./TodoMvc/data-model";
 import { StatefulTodoList } from "./TodoMvc/TodoList";
 
 const demoSummary = `
@@ -20,14 +19,14 @@ const DirectTodoList = () => <StatefulTodoList />;
 const DirectTodoList = () => <StatefulTodoList />;
 
 const DirectTodoListDemo = () => (
-  <SimpleGrid columns={2}>
-    <Box p="4">
+  <Flex>
+    <Box p="4" minWidth="460px" w="100%" h="100vh">
       <DirectTodoList />
     </Box>
-    <Box p="4" bg="white" h="100vh">
+    <Box p="4" bg="white" w="100%" h="100vh">
       <ReactMarkdown className="markdown-body">{demoSummary}</ReactMarkdown>
     </Box>
-  </SimpleGrid>
+  </Flex>
 );
 
 export default DirectTodoListDemo;

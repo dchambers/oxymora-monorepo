@@ -1,4 +1,4 @@
-import { Box, SimpleGrid } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 
@@ -65,14 +65,14 @@ const FullRoutingTodoList = () => {
 };
 
 const FullRoutingTodoListDemo = () => (
-  <SimpleGrid columns={2}>
-    <Box p="4">
+  <Flex>
+    <Box p="4" minWidth="460px" w="100%" h="100vh">
       <FullRoutingTodoList />
     </Box>
-    <Box p="4" bg="white" h="100vh">
+    <Box p="4" bg="white" w="100%" h="100vh">
       <ReactMarkdown className="markdown-body">{demoSummary}</ReactMarkdown>
     </Box>
-  </SimpleGrid>
+  </Flex>
 );
 
 export default FullRoutingTodoListDemo;

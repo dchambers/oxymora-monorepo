@@ -28,7 +28,7 @@ type LinkItem = {
 
 const Sidebar = ({ title, linkItems, children }: SidebarProps) => (
   <>
-    <Box display={{ base: "block", lg: "none" }}>
+    <Box display={{ base: "block", xl: "none" }}>
       <Alert status="info">
         <AlertIcon />
         Increase window width to make navigation visible.
@@ -39,10 +39,10 @@ const Sidebar = ({ title, linkItems, children }: SidebarProps) => (
         bg={useColorModeValue("white", "gray.900")}
         borderRight="1px"
         borderRightColor={useColorModeValue("gray.200", "gray.700")}
-        w={{ base: "full", lg: 180 }}
+        w={{ base: "full", xl: 180 }}
         pos="fixed"
         h="full"
-        display={{ base: "none", lg: "block" }}
+        display={{ base: "none", xl: "block" }}
       >
         <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
           <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
@@ -55,7 +55,7 @@ const Sidebar = ({ title, linkItems, children }: SidebarProps) => (
           </NavItem>
         ))}
       </Box>
-      <Box ml={{ base: 0, lg: 180 }}>{children}</Box>
+      <Box ml={{ base: 0, xl: 180 }}>{children}</Box>
     </Box>
   </>
 );
