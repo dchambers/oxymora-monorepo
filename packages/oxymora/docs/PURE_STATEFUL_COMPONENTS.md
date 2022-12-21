@@ -21,7 +21,7 @@ type PureStatefulComponentProps<S> = {
 
 ## What Are The Benefits?
 
-Even though a pure-stateful component can be made into a regular stateful component using `makeStateful`, having access to the pure-stateful component is useful since it increases the softare re-use potential. This is the case since pure functions can always be compposed into larger components, whereas that's not always possible with stateful components.
+Even though a pure-stateful component can be made into a regular stateful component using `makeStateful`, having access to the pure-stateful component is useful since it increases the softare re-use potential. This is the case since pure functions can always be composed into larger components, whereas that's not always possible with stateful components.
 
 For a demonstration of this take a look at the [Todo MVC Demo](../README.md#try-oxymora-out), which is used in three different ways, only two of which are viable using the stateful component.
 
