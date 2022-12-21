@@ -39,9 +39,9 @@ The fact that this is so restrictive, and the fact that both types of functions 
 
 ### What About Side-Effects Though?
 
-Having said the above, components often do need to have side-effects, and when that's the case those side-effects must ultimately be handled somewhere. Oxymora components can overcome this by firing callbacks, and leaving it to the consuming component to act on those callbacks. It may very well be the case that the component module provides the impure functions to help with this, but provided that it's left to the consuming component to pull the trigger on their use, then the component itself remains pure.
+Having said the above, components often do need to have side-effects, and when that's the case those side-effects must ultimately be handled somewhere. Oxymora components can overcome this by firing callbacks, and leaving it to the consuming component to act on those callbacks. It may very well be the case that the component module provides some impure functions to help with this, but provided that it's left to the consuming component to pull the trigger on their use, then the component itself will remain pure.
 
-If the consuming component is itself an Oxymora component, it can refrain from accepting this responsibility by offering a callback prop of its own to handle the side effect, which can then be fed (as-is, or wrapped in a coordinating function) to the child component. The idea here being that side-effects should ideally be handled at the top of the app component tree only, such that the vast majority of an app's call-stack / component-tree will be trivial to reason about, and trivial to test.
+If the consuming component is itself a pure component, it can refrain from accepting this responsibility by offering a callback prop of its own to handle the side effect, which can then be fed (as-is, or wrapped in a coordinating function) to the child component. The idea being that side-effects should ideally be handled at the top of the app component tree only, such that the vast majority of an app's call-stack / component-tree will be trivial to reason about, and trivial to test.
 
 ![Oxymora Component Tree](oxymora-component-tree.svg)
 
@@ -112,25 +112,27 @@ export const todoListReducer = (
 
 Composability is diminished once state or side-effects are introduced into a component, such that not all use cases for a component remain possible once a component ceases to be pure. You can find a practical example of this within the [StackBlitz demo](https://github.com/dchambers/oxymora-monorepo/tree/master/packages/oxymora#try-a-demo), which implements the following three use cases using the `TodoList` component:
 
-- No routing.
-- Client-side routing where state isn't persisted.
-- Full routing where state is persisted using local-storage.
+- TodoMVC with no routing.
+- TodoMVC with client-side routing and where state isn't persisted.
+- TodoMVC with full routing and where state is persisted using local-storage.
 
-Of these three use cases, only the first two can be supported by the stateful version of the `TodoList` component, whereas all three can be supported by leveraging the pure component. As is mentioned in that demo, although `TodoList` could be re-written to explicitly support the third use-case in the stateful version, doing so would then prevent the first two use cases.
+Of these three use cases, only the first two can be supported by the stateful version of the `TodoList` component, whereas all three can be supported by leveraging the pure component. As is mentioned in that demo, although `TodoList` could be re-written to explicitly support the third use-case in the stateful version, doing so would then prevent its use when implementing the first two use cases.
+
+So with stateful components you genuinely can't always have your cake, and eat it too 🧁.
 
 ## Faster to Feedback by Reducing Clicking
 
 _TBD_ (section to be written once example `react-testing-library` tests have been added for `TodoList`).
 
-## Faster to Feedback by Eliminating Clicking
+## Even Faster to Feedback by Eliminating Clicking
 
 For those choosing to [test via a view-model](#testable-via-view-model), testing through slower view based tests (e.g. `react-testing-library`) will either be completely eliminated, or substantially reduced, depending on whether the developer chooses to have any view based tests at all (e.g. for verifying that a component's view is correctly bound).
 
-In both cases, extensive behaviour tests will occur using only the reducer function, which effectively acts as the view-model for the component, and which will result in much faster and completely reliable tests.
+In both cases, extensive behaviour tests will occur using only the reducer function, which effectively acts as the view-model for the component, and which will result in much faster and completely reliable tests than otherwise.
 
 ## More Robust
 
-It's not just my experience; developers that try them regularly report finding that pure functions lead to fewer bugs, for example:
+It's not just my experience; developers that try them regularly report finding that pure functions lead to fewer bugs and simpler code, for example:
 
 - https://dev.to/nimmo/pure-functions-and-why-i-like-them
 - https://www.learnhowtoprogram.com/react/functional-programming-with-javascript/pure-functions
