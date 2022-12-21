@@ -15,21 +15,21 @@ Oxymora is the plural of oxymoron, and this library has that name since it has f
 Oxymora components are:
 
 1. Quick to write:
-   - [Components are written declaritively](./docs/OXYMORA_COMPONENTS_ARE#written-declaratively).
-   - [No callback prop-drilling](./docs/OXYMORA_COMPONENTS_ARE#free-from-callback-prop-drilling).
+   - [Components are written declaratively](./docs/OXYMORA_COMPONENTS_ARE.md#written-declaratively).
+   - [No callback prop-drilling](./docs/OXYMORA_COMPONENTS_ARE.md#free-from-callback-prop-drilling).
 2. Easy to reason about / debug.
-   - [Trivial component mental model](./docs/OXYMORA_COMPONENTS_ARE#easy-to-comprehend).
-   - [Both view functions and event handler functions are 100% pure](./docs/OXYMORA_COMPONENTS_ARE#one-hundred-percent-pure).
+   - [Trivial component mental model](./docs/OXYMORA_COMPONENTS_ARE.md#easy-to-comprehend).
+   - [Both view functions and event handler functions are 100% pure](./docs/OXYMORA_COMPONENTS_ARE.md#one-hundred-percent-pure).
 3. Simple to test.
-   - [Pure components so mocking isn't required](./docs/OXYMORA_COMPONENTS_ARE#testable-without-mocks).
-   - [Option to test via a view-model rather than via the view](./docs/OXYMORA_COMPONENTS_ARE#testable-via-view-model).
+   - [Pure components so mocking isn't required](./docs/OXYMORA_COMPONENTS_ARE.md#testable-without-mocks).
+   - [Option to test via a view-model rather than via the view](./docs/OXYMORA_COMPONENTS_ARE.md#testable-via-view-model).
 4. Always composable.
-   - [Unlike stateful components, pure components always compose](./docs/OXYMORA_COMPONENTS_ARE#always-composable).
+   - [Unlike stateful components, pure components always compose](./docs/OXYMORA_COMPONENTS_ARE.md#always-composable).
 5. Quicker to feedback on broken functionality.
-   - [Ability to jump components to prior UI discovered states to speed up view tests](./docs/OXYMORA_COMPONENTS_ARE#faster-to-feedback-by-reducing-clicking).
-   - [Option to have even faster tests if testing via a view-model](./docs/OXYMORA_COMPONENTS_ARE#faster-to-feedback-by-almost-eliminating-clicking)
+   - [Ability to jump components to prior UI discovered states to speed up view tests](./docs/OXYMORA_COMPONENTS_ARE.md#faster-to-feedback-by-reducing-clicking).
+   - [Option to have even faster tests if testing via a view-model](./docs/OXYMORA_COMPONENTS_ARE.md#faster-to-feedback-by-almost-eliminating-clicking)
 6. Robust.
-   - [Less state equals fewer bugs](./docs/OXYMORA_COMPONENTS_ARE#more-robust).
+   - [Less state equals fewer bugs](./docs/OXYMORA_COMPONENTS_ARE.md#more-robust).
 
 ## The Anatomy of an Oxymora Component
 

@@ -39,7 +39,7 @@ The fact that this is so restrictive, and the fact that both types of functions 
 
 Having said that, things will naturally become more complicated once side effects are needed, but these can happen external to any pure-stateful components. The app that is composed of these components can then decide how best to manage any needed side effects.
 
-The important thing here being that side effects should be [lifted to the top of the component tree](./PURE_STATEFUL_COMPONENTS.md#which-components-should-be-pure-stateful); i.e. the app, rather than the components or controls from which the app is composed. This allows the vast majority of the app to be easy to reason about, and easy to test, with any hard to test and reason about code existing only at the peripheries.
+The important thing here being that side effects should be [lifted to the top of the component tree](./PURE_STATEFUL_COMPONENTS.md#lifting-state-and-side-effects); i.e. the app, rather than the components or controls from which the app is composed. This allows the vast majority of the app to be easy to reason about, and easy to test, with any hard to test and reason about code existing only at the peripheries.
 
 ## One Hundred Percent Pure
 
