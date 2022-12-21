@@ -1,4 +1,4 @@
-import { Box, SimpleGrid } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import ReactMarkdown from "react-markdown";
 
 import { StatefulCounter } from "./Counter/Counter";
@@ -53,14 +53,14 @@ export const StatefulCounter =
 `;
 
 const CounterDemo = () => (
-  <SimpleGrid columns={2}>
-    <Box p="4">
+  <Flex>
+    <Box p="4" minWidth="460px" h="100vh">
       <StatefulCounter incrementBy={2} />
     </Box>
     <Box p="4" bg="white" h="100vh">
       <ReactMarkdown className="markdown-body">{demoSummary}</ReactMarkdown>
     </Box>
-  </SimpleGrid>
+  </Flex>
 );
 
 export default CounterDemo;
