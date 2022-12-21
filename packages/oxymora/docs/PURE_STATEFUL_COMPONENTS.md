@@ -36,3 +36,5 @@ This is no different to which components you'd want to make regularly stateful, 
 1. The top-level app itself.
 2. Independently testable units of the app.
 3. Indepenently testable UI controls.
+
+![Oxymora Component Tree](oxymora-component-tree.svg)
