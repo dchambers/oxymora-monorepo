@@ -1,4 +1,4 @@
-# Oxymora Components Are
+# Oxymora Components Are...
 
 ## Written Declaratively
 
@@ -37,13 +37,17 @@ Event handler functions describe updated component state and fired component cal
 
 The fact that this is so restrictive, and the fact that both types of functions are pure is what makes it so easy to reason about Oxymora components.
 
-Having said that, things will naturally become more complicated once side effects are needed, but these can happen external to any pure-stateful components. The app that is composed of these components can then decide how best to manage any needed side effects.
+### What About Side-Effects Though?
 
-The important thing here being that side effects should be [lifted to the top of the component tree](./PURE_STATEFUL_COMPONENTS.md#lifting-state-and-side-effects); i.e. the app, rather than the components or controls from which the app is composed. This allows the vast majority of the app to be easy to reason about, and easy to test, with any hard to test and reason about code existing only at the peripheries.
+Having said the above, components often do need to have side-effects, and when that's the case those side-effects must ultimately be handled somewhere. Oxymora components can overcome this by firing callbacks, and leaving it to the consuming component to act on those callbacks. It may very well be the case that the component module provides the impure functions to help with this, but provided that it's left to the consuming component to pull the trigger on their use, then the component itself remains pure.
+
+If the consuming component is itself an Oxymora component, it can refrain from accepting this responsibility by offering a callback prop of its own to handle the side effect, which can then be fed (as-is, or wrapped in a coordinating function) to the child component. The idea here being that side-effects should ideally be handled at the top of the app component tree only, such that the vast majority of an app's call-stack / component-tree will be trivial to reason about, and trivial to test.
+
+![Oxymora Component Tree](oxymora-component-tree.svg)
 
 ## One Hundred Percent Pure
 
-Well, almost. While Oxymora is the only library I'm aware of which allows you to create rich React applications from pure functions alone, there are limitations within React which require side-effects to be introduced into what would otherwise be pure components.
+Well, almost. While Oxymora is the only library I'm aware of which allows you to create rich React applications from pure functions alone, there are limitations within React which occasionally require side-effects to be introduced into what would otherwise be pure components.
 
 If you take a look at the TodoMVC code for example, you'll find one such example of this. This is around the requirement in TodoMVC to focus the rename input box that's displayed after double-clicking a todo item to put it into edit mode. Since React provides no way to declaratively say which component should currently have focus (e.g. via a `isFocussed` property), a `useRef` and `useEffect` must be introduced to satisfy this requirement at present.
 
@@ -106,13 +110,13 @@ export const todoListReducer = (
 
 ## Always Composable
 
-Composability is diminished once state or side-effects are introduced into a component, such that not all use cases for a component remain possible once a component ceases to be pure. You can find a practical example of this within the [StackBlitz demo](https://github.com/dchambers/oxymora-monorepo/tree/master/packages/oxymora#try-a-demo), which includes the following three use cases for a `TodoList` component:
+Composability is diminished once state or side-effects are introduced into a component, such that not all use cases for a component remain possible once a component ceases to be pure. You can find a practical example of this within the [StackBlitz demo](https://github.com/dchambers/oxymora-monorepo/tree/master/packages/oxymora#try-a-demo), which implements the following three use cases using the `TodoList` component:
 
 - No routing.
 - Client-side routing where state isn't persisted.
 - Full routing where state is persisted using local-storage.
 
-Of these three use cases, only the first two can be supported by the stateful version of the component, whereas all three can be supported by leveraging the pure component. As is mentioned in that demo, although `TodoList` could be re-written to explicitly support the third use-case in the stateful version, doing so would then prevent the first two use cases.
+Of these three use cases, only the first two can be supported by the stateful version of the `TodoList` component, whereas all three can be supported by leveraging the pure component. As is mentioned in that demo, although `TodoList` could be re-written to explicitly support the third use-case in the stateful version, doing so would then prevent the first two use cases.
 
 ## Faster to Feedback by Reducing Clicking
 
@@ -120,11 +124,13 @@ _TBD_ (section to be written once example `react-testing-library` tests have bee
 
 ## Faster to Feedback by Eliminating Clicking
 
-For those choosing to [test via a view-model](#testable-via-view-model), component testing will be limited to a few tests to ensure that a component's view is correctly bound, with extensive behaviour tests occurring using only the reducer function (which is effectively the view-model for the component). In this way, the number of view based tests can be significantly diminished, leading to faster test packs, and faster feedback.
+For those choosing to [test via a view-model](#testable-via-view-model), testing through slower view based tests (e.g. `react-testing-library`) will either be completely eliminated, or substantially reduced, depending on whether the developer chooses to have any view based tests at all (e.g. for verifying that a component's view is correctly bound).
+
+In both cases, extensive behaviour tests will occur using only the reducer function, which effectively acts as the view-model for the component, and which will result in much faster and completely reliable tests.
 
 ## More Robust
 
-It's not just my experience; developers that try them find that pure functions lead to fewer bugs, for example:
+It's not just my experience; developers that try them regularly report finding that pure functions lead to fewer bugs, for example:
 
 - https://dev.to/nimmo/pure-functions-and-why-i-like-them
 - https://www.learnhowtoprogram.com/react/functional-programming-with-javascript/pure-functions
